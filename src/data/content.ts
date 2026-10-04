@@ -22,12 +22,11 @@ export interface ProjectItem {
   tagline: string;
   description: string;
   stack: string[];
-  year: string;
+  year?: string;
   features?: string[];
-  fraudEngine?: string[];
-  metrics?: string[];
+  bullets?: string[];
+  repoUrl?: string;
   liveUrl?: string;
-  githubUrl?: string;
   image?: string;
   featured?: boolean;
 }
@@ -39,6 +38,7 @@ export interface JourneyItem {
   institution: string;
   location?: string;
   details?: string;
+  credentialUrl?: string;
 }
 
 export const PERSONAL_INFO = {
@@ -87,17 +87,16 @@ export const PROJECTS: ProjectItem[] = [
     tagline: "Blockchain agricultural supply chain with automated fraud detection",
     description:
       "A decentralized tracking platform built on Polygon Amoy. It establishes an immutable provenance trail across farmer, distributor, retailer, and consumer while flagging supply chain anomalies in real time.",
-    year: "2025",
+    // TODO(Sujal): add year
     stack: ["Solidity", "Polygon Amoy", "React", "Node/Express", "Ethers.js", "Docker Compose"],
     features: [
       "4-tier lifecycle custody tracking (Farmer -> Distributor -> Retailer -> Consumer)",
       "3-layer fraud engine: flags duplicate batch lots, sequence gaps, and >500% price anomalies",
       "Dynamic trust score (0-100) per actor and QR-based provenance verification",
-      "Integrated AfterShip courier tracking for active transit legs",
+      "Integrated courier tracking for active transit legs",
     ],
-    liveUrl: "https://github.com/SujalKanu-stack/agrichain", // TODO(Sujal): update with production live URL if deployed
-    githubUrl: "https://github.com/SujalKanu-stack/agrichain",
-    image: "/projects/agrichain.png", // TODO(Sujal): add screenshot to public/projects/agrichain.png
+    repoUrl: "https://github.com/SujalKanu-stack/AgriChain",
+    image: withBase("/projects/agrichain.png"), // TODO(Sujal): add screenshot to public/projects/agrichain.png
   },
   {
     id: "research-collab-hub",
@@ -106,10 +105,14 @@ export const PROJECTS: ProjectItem[] = [
     tagline: "Collaborative research paper workspace with AI abstract decomposition",
     description:
       "A unified platform for academic research teams featuring versioned paper drafting, BibTeX export, conference deadline calendars, and automated co-author matching via the Claude API.",
-    year: "2024",
+    // TODO(Sujal): add year
+    // TODO(Sujal): add repoUrl if you make the repository public
     stack: ["FastAPI", "React 18", "PostgreSQL 16", "Redis", "Docker", "Claude API"],
-    liveUrl: "https://github.com/SujalKanu-stack/research-collab-hub",
-    githubUrl: "https://github.com/SujalKanu-stack/research-collab-hub",
+    bullets: [
+      "Versioned paper drafting workspace with AI abstract decomposition via Claude API",
+      "Automated BibTeX citation formatting and conference submission deadline calendar",
+      "Full-stack asynchronous backend with PostgreSQL schema and Redis caching",
+    ],
   },
   {
     id: "cardiosim-3d",
@@ -118,10 +121,15 @@ export const PROJECTS: ProjectItem[] = [
     tagline: "Interactive 3D cardiac anatomy and arrhythmia simulation",
     description:
       "Browser-based anatomical simulator allowing 30 to 200 BPM heart pacing, interactive coronary artery blockage models, and an integrated diagnostic quiz for medical students.",
-    year: "2024",
-    stack: ["Vanilla JS (ES6+)", "WebGL", "Sketchfab API", "HTML5/CSS3"],
-    liveUrl: "https://github.com/SujalKanu-stack/cardiosim-3d",
-    githubUrl: "https://github.com/SujalKanu-stack/cardiosim-3d",
+    // TODO(Sujal): add year
+    // TODO(Sujal): confirm Heart_Sim vs Heart-simulator
+    repoUrl: "https://github.com/SujalKanu-stack/Heart_Sim",
+    stack: ["Vanilla JS", "WebGL", "Sketchfab API"],
+    bullets: [
+      "Browser-based 3D anatomical heart simulator supporting 30 to 200 BPM dynamic pacing",
+      "Interactive coronary artery blockage and simulated ischemia visualization",
+      "Integrated arrhythmia diagnostic quiz using Sketchfab 3D API",
+    ],
   },
   {
     id: "iot-weather",
@@ -129,10 +137,15 @@ export const PROJECTS: ProjectItem[] = [
     title: "IoT Weather Monitoring System",
     tagline: "Microcontroller telemetry for ambient temperature, humidity, and barometric pressure",
     description:
-      "Hardware sensor array transmitting atmospheric data via MQTT to a lightweight dashboard for real-time climate logging.",
+      "Hardware sensor array transmitting atmospheric data via telemetry to a lightweight dashboard for real-time climate logging.",
     year: "2023",
-    stack: ["C++", "ESP32", "MQTT", "Node.js", "Sensors"],
-    githubUrl: "https://github.com/SujalKanu-stack/iot-weather",
+    // TODO(Sujal): add repoUrl if you make the repository public
+    stack: ["IoT sensors", "Temperature", "Humidity", "Pressure"],
+    bullets: [
+      "Atmospheric sensor array recording ambient temperature, humidity, and barometric pressure",
+      "Calibrated transducer telemetry with edge-level signal filtering",
+      "Real-time climate logging interface for continuous physical environment monitoring",
+    ],
   },
   {
     id: "matlab-modelling",
@@ -141,9 +154,14 @@ export const PROJECTS: ProjectItem[] = [
     tagline: "Numerical analysis, regression curves, and error distribution modelling",
     description:
       "Parametric and non-parametric data modelling evaluating goodness-of-fit across physical and statistical experimental datasets.",
-    year: "2025",
-    stack: ["MATLAB", "Statistics Toolbox", "Curve Fitting"],
-    githubUrl: "https://github.com/SujalKanu-stack",
+    year: "Oct - Nov 2025",
+    // TODO(Sujal): add repoUrl if you make the repository public
+    stack: ["MATLAB", "Regression", "Curve fitting", "Residual analysis"],
+    bullets: [
+      "Parametric non-linear least squares regression across empirical datasets",
+      "Residual variance minimization and R-squared goodness-of-fit validation",
+      "Comparative regression curves evaluating polynomial, exponential, and power models",
+    ],
   },
 ];
 

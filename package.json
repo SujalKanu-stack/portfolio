@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "check": "node scripts/check-links.mjs",
+    "check:layout": "node scripts/check-layout.mjs"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.15.1",
