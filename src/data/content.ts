@@ -50,7 +50,8 @@ export const PERSONAL_INFO = {
   bio: [
     "I am a third-year Computer Science and Engineering student at BMS Institute of Technology & Management in Bengaluru, studying since 2023.",
     "My focus centers on full-stack web engineering, smart contract development, and applied generative AI systems.",
-    "Currently, I am exploring network security fundamentals, smart contract verification, and statistical curve fitting models.",
+    "Right now I'm learning generative AI: how large language models work, prompt engineering, and building AI agents. Next I want to build an agent end to end, while continuing to explore network security.",
+    // TODO(Sujal): add the framework or course you are using (e.g. LangChain, LlamaIndex, or specific AI agent course)
     "Outside coursework, I experiment with decentralized systems and participate in 24-hour hackathons.",
   ],
   languages: ["Bhojpuri", "Hindi", "Nepali", "English"],
