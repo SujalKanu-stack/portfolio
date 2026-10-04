@@ -28,28 +28,48 @@ export default function Contact() {
     setStatus("loading");
     setFeedback("");
 
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+    // 1. If Formspree Key is configured, submit via Formspree API (free serverless form endpoint)
+    const formspreeKey = process.env.NEXT_PUBLIC_FORMSPREE_KEY;
+    if (formspreeKey) {
+      try {
+        const res = await fetch(`https://formspree.io/f/${formspreeKey}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+          }),
+        });
 
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setStatus("success");
-        setFeedback(data.message || "Message sent successfully!");
-        setFormData({ name: "", email: "", message: "", honeypot: "" });
-      } else {
-        setStatus("error");
-        setFeedback(data.error || "Failed to send message. Please email directly.");
+        if (res.ok) {
+          setStatus("success");
+          setFeedback("Thank you! Your message has been sent successfully.");
+          setFormData({ name: "", email: "", message: "", honeypot: "" });
+          return;
+        }
+      } catch (err) {
+        console.error("Formspree error:", err);
       }
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
-      setFeedback("Network error. Please email directly at sujalguptaa121@gmail.com.");
     }
+
+    // 2. Client-side static handler (GitHub Pages compatible):
+    // Open user's default email client pre-populated with subject & body, and copy message to clipboard
+    try {
+      await navigator.clipboard.writeText(formData.message.trim());
+    } catch {
+      // Ignore clipboard fallback
+    }
+
+    const mailtoSubject = encodeURIComponent(`Portfolio Inquiry from ${formData.name.trim()}`);
+    const mailtoBody = encodeURIComponent(
+      `Hi Sujal,\n\n${formData.message.trim()}\n\nFrom: ${formData.name.trim()} (${formData.email.trim()})`
+    );
+    window.location.href = `mailto:${PERSONAL_INFO.socials.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
+
+    setStatus("success");
+    setFeedback("Draft opened in your email client. Message was also copied to clipboard!");
+    setFormData({ name: "", email: "", message: "", honeypot: "" });
   };
 
   const handleBackToTop = (e: React.MouseEvent) => {

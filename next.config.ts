@@ -1,7 +1,27 @@
 import type { NextConfig } from "next";
 
+const isGithubActions = process.env.GITHUB_ACTIONS === "true";
+let repoName = "";
+if (process.env.GITHUB_REPOSITORY) {
+  repoName = process.env.GITHUB_REPOSITORY.split("/")[1] || "";
+}
+
+// When building on GitHub Actions for https://<owner>.github.io/<repo>, basePath is /<repo>
+const defaultBasePath =
+  isGithubActions && repoName && !repoName.endsWith(".github.io")
+    ? `/${repoName}`
+    : "";
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? defaultBasePath;
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: "export",
+  basePath: basePath || undefined,
+  assetPrefix: basePath || undefined,
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
