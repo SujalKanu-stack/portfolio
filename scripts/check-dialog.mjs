@@ -78,9 +78,13 @@ async function runDialogTests() {
       console.log(`  [${openPass ? "PASS" : "FAIL"}] Dialog Open via Mouse: "${dialogStatusOpen.titleText}"`);
 
       // Save screenshot of open dialog
+      const slug = (dialogStatusOpen.titleText || `project-${i}`)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
       const dialogScreenshotName = cfg.isMobile
-        ? `dialog-390x844-${i === 0 ? "research-collab-hub" : "iot-weather"}.png`
-        : `dialog-1366x768-${i === 0 ? "research-collab-hub" : "iot-weather"}.png`;
+        ? `dialog-390x844-${slug}.png`
+        : `dialog-1366x768-${slug}.png`;
       await page.screenshot({ path: path.join(screenshotDir, dialogScreenshotName) });
       console.log(`  [INFO] Captured screenshot: audit-screenshots/${dialogScreenshotName}`);
 

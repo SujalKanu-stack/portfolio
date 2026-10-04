@@ -73,7 +73,7 @@ export const PROJECTS: ProjectItem[] = [
       "A collaborative research paper platform with automated paper versioning triggers, BibTeX citation export, and conference deadline tracking; Claude API pipelines for abstract decomposition, venue suitability analysis, and co-author matching.",
     // TODO(Sujal): confirm which of these features actually work, and edit the bullets to match.
     // TODO(Sujal): add year
-    // TODO(Sujal): add repoUrl if you make the repository public
+    repoUrl: "https://github.com/SujalKanu-stack/Research_collab_Hub",
     stack: ["FastAPI", "React 18", "PostgreSQL 16", "Redis", "Docker", "Claude API"],
     bullets: [
       "Versioned paper drafting workspace with AI abstract decomposition via Claude API",
