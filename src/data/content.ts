@@ -196,12 +196,13 @@ export const JOURNEY: JourneyItem[] = [
     institution: "E-Cell BMSIT&M",
     details: "24-hour national technical hackathon solving real-time engineering challenges under tight time limits.",
   },
+  // TODO(Sujal): credential links
   {
     year: "Oct 2025",
     category: "Certification",
-    title: "Statistics & Curve Fitting Onramp",
+    title: "Statistics Onramp and Curve Fitting Onramp",
     institution: "MathWorks",
-    details: "Regression analysis, residual testing, and parametric mathematical curve fitting.",
+    details: "100% completion. Regression curves, residual analysis, and mathematical curve fitting models.",
   },
   {
     year: "Jun 2025",
@@ -213,7 +214,7 @@ export const JOURNEY: JourneyItem[] = [
   {
     year: "2023",
     category: "Certification",
-    title: "IoT and Robotics 7-Day Intensive",
+    title: "IoT and Robotics, 7-Day Intensive",
     institution: "NepaTronix x National Infotech",
     details: "Hands-on microcontroller programming, sensor integration, and motor actuation circuits.",
   },

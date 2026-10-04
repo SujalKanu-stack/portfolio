@@ -18,9 +18,21 @@ export default function Journey() {
               {item.year.includes(" - ") ? "2023 - Pres" : item.year}
             </span>
             <div className="min-w-0">
-              <h4 className="text-xs font-bold text-[var(--text)] truncate">
-                {item.title}
-              </h4>
+              {item.credentialUrl ? (
+                <a
+                  href={item.credentialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-bold text-[var(--text)] hover:text-[var(--accent)] inline-flex items-center gap-1 transition-colors"
+                >
+                  <span className="truncate">{item.title}</span>
+                  <span className="text-[10px] text-[var(--accent)]">&nearr;</span>
+                </a>
+              ) : (
+                <h4 className="text-xs font-bold text-[var(--text)] truncate">
+                  {item.title}
+                </h4>
+              )}
               <p className="text-[11px] text-[var(--muted)] truncate">
                 {item.institution}
               </p>
