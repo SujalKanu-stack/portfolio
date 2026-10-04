@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root, [data-theme="ember"] {
+  --nav-h: 52px;
   --bg-0: #0B0A09;
   --bg-1: #15110E;
   --surface: #1B1612;
@@ -115,28 +116,45 @@ body {
   top: 16px;
 }
 
-/* Screen height panel rule for desktop (>= 1024px) */
+/* Single layout contract for desktop (>= 1024px) */
 @media (min-width: 1024px) {
   .screen-panel {
     height: 100svh;
-    max-height: 100svh;
+    min-height: 560px;
+    padding-top: calc(var(--nav-h) + 16px);
+    padding-bottom: 32px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
     overflow: hidden;
+  }
+
+  .screen-panel-content {
+    flex: 1 1 0%;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: relative;
+    width: 100%;
   }
 }
 
 @media (max-width: 1023px) {
   .screen-panel {
     min-height: 100svh;
-    padding-top: 5.5rem;
-    padding-bottom: 3rem;
+    padding-top: calc(var(--nav-h) + 24px);
+    padding-bottom: 40px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     position: relative;
+  }
+
+  .screen-panel-content {
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
   }
 }
 

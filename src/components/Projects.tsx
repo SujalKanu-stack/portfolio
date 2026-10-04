@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { PROJECTS, ProjectItem } from "@/data/content";
+import { PROJECTS, ProjectItem, SECTIONS } from "@/data/content";
 import { ExternalLink, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { GithubIcon } from "./SocialIcons";
 import Image from "next/image";
@@ -22,11 +22,11 @@ export default function Projects() {
       aria-labelledby="projects-heading"
       className="screen-panel w-full"
     >
-      <div className="max-w-[1200px] w-full mx-auto px-6 md:px-12 my-auto pt-16 pb-8">
+      <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12">
         <div className="flex items-center justify-between mb-4">
           <div>
             <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold">
-              02 / Projects
+              {SECTIONS[2].eyebrow}
             </span>
             <h2
               id="projects-heading"

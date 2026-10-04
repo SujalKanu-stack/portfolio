@@ -1,5 +1,21 @@
 import { withBase } from "@/lib/basePath";
 
+export interface SectionMeta {
+  id: string;
+  num: string;
+  name: string;
+  eyebrow: string;
+  label: string;
+}
+
+export const SECTIONS: SectionMeta[] = [
+  { id: "home", num: "01", name: "Home", eyebrow: "01 / Home", label: "01 Home" },
+  { id: "about", num: "02", name: "About", eyebrow: "02 / About", label: "02 About" },
+  { id: "projects", num: "03", name: "Projects", eyebrow: "03 / Projects", label: "03 Projects" },
+  { id: "journey", num: "04", name: "Journey", eyebrow: "04 / Journey", label: "04 Journey" },
+  { id: "contact", num: "05", name: "Contact", eyebrow: "05 / Contact", label: "05 Contact" },
+];
+
 export interface ProjectItem {
   id: string;
   title: string;

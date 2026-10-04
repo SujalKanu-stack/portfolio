@@ -1,14 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const SECTIONS = [
-  { id: "home", label: "01 Home" },
-  { id: "about", label: "02 About" },
-  { id: "projects", label: "03 Projects" },
-  { id: "journey", label: "04 Journey" },
-  { id: "contact", label: "05 Contact" },
-];
+import { SECTIONS } from "@/data/content";
 
 export default function SideIndex() {
   const [activeId, setActiveId] = useState("home");

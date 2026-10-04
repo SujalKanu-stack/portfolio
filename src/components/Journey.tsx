@@ -1,4 +1,4 @@
-import { JOURNEY, JourneyItem } from "@/data/content";
+import { JOURNEY, JourneyItem, SECTIONS } from "@/data/content";
 
 export default function Journey() {
   const educationItems = JOURNEY.filter((item) => item.category === "Education");
@@ -42,10 +42,10 @@ export default function Journey() {
       aria-labelledby="journey-heading"
       className="screen-panel w-full"
     >
-      <div className="max-w-[1200px] w-full mx-auto px-6 md:px-12 my-auto pt-16 pb-8">
+      <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12">
         <div className="mb-4">
           <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold">
-            03 / Journey
+            {SECTIONS[3].eyebrow}
           </span>
           <h2
             id="journey-heading"

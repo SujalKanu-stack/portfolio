@@ -107,7 +107,7 @@ export default function Contact() {
       aria-labelledby="contact-heading"
       className="screen-panel w-full"
     >
-      <div className="max-w-[1200px] w-full mx-auto px-6 md:px-12 my-auto pt-16 pb-4 flex flex-col justify-between h-full">
+      <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12 flex flex-col justify-between">
         <div>
           <div className="mb-4">
             <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold">

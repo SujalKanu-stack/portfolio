@@ -1,4 +1,4 @@
-import { PERSONAL_INFO } from "@/data/content";
+import { PERSONAL_INFO, SECTIONS } from "@/data/content";
 import TechLogos from "./TechLogos";
 import { Globe2 } from "lucide-react";
 
@@ -11,12 +11,12 @@ export default function About() {
       aria-labelledby="about-heading"
       className="screen-panel w-full"
     >
-      <div className="max-w-[1200px] w-full mx-auto px-6 md:px-12 my-auto pt-16 pb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column (7/12): Narrative */}
-          <div className="lg:col-span-7 flex flex-col justify-center">
+          <div className="lg:col-span-7 flex flex-col justify-start">
             <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold mb-1">
-              01 / About
+              {SECTIONS[1].eyebrow}
             </span>
 
             <h2
