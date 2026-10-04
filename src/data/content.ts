@@ -1,3 +1,5 @@
+import { withBase } from "@/lib/basePath";
+
 export interface ProjectItem {
   id: string;
   title: string;
@@ -43,10 +45,11 @@ export const PERSONAL_INFO = {
   ],
   socials: {
     github: "https://github.com/SujalKanu-stack",
-    linkedin: "https://www.linkedin.com/in/sujal-kumar-kanu/",
+    // TODO(Sujal): confirm which LinkedIn URL is correct (resume says sujal-kanu vs sujal-kumar-kanu)
+    linkedin: "https://www.linkedin.com/in/sujal-kanu",
     email: "sujalguptaa121@gmail.com",
   },
-  resumePath: `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/Sujal_Kumar_Kanu_Resume.pdf`,
+  resumePath: withBase("/Sujal_Kumar_Kanu_Resume.pdf"),
 };
 
 export const TECH_LOGOS = [

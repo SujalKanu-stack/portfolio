@@ -25,51 +25,71 @@ export default function Contact() {
     e.preventDefault();
     if (formData.honeypot) return; // Silent discard for bots
 
+    // Client-side validation
+    if (!formData.name.trim() || formData.name.trim().length < 2) {
+      setStatus("error");
+      setFeedback("Please enter your name (minimum 2 characters).");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
+      setStatus("error");
+      setFeedback("Please enter a valid email address.");
+      return;
+    }
+    if (!formData.message.trim() || formData.message.trim().length < 10) {
+      setStatus("error");
+      setFeedback("Message must be at least 10 characters long.");
+      return;
+    }
+
+    const endpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT;
+    if (!endpoint) {
+      setStatus("error");
+      setFeedback(
+        `Contact service endpoint is pending configuration. Please email directly using the link below or at ${PERSONAL_INFO.socials.email}.`
+      );
+      return;
+    }
+
     setStatus("loading");
     setFeedback("");
 
-    // 1. If Formspree Key is configured, submit via Formspree API (free serverless form endpoint)
-    const formspreeKey = process.env.NEXT_PUBLIC_FORMSPREE_KEY;
-    if (formspreeKey) {
-      try {
-        const res = await fetch(`https://formspree.io/f/${formspreeKey}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            message: formData.message,
-          }),
-        });
+    const submitUrl =
+      endpoint.startsWith("http://") || endpoint.startsWith("https://")
+        ? endpoint
+        : `https://formspree.io/f/${endpoint}`;
 
-        if (res.ok) {
-          setStatus("success");
-          setFeedback("Thank you! Your message has been sent successfully.");
-          setFormData({ name: "", email: "", message: "", honeypot: "" });
-          return;
-        }
-      } catch (err) {
-        console.error("Formspree error:", err);
-      }
-    }
-
-    // 2. Client-side static handler (GitHub Pages compatible):
-    // Open user's default email client pre-populated with subject & body, and copy message to clipboard
     try {
-      await navigator.clipboard.writeText(formData.message.trim());
-    } catch {
-      // Ignore clipboard fallback
+      const res = await fetch(submitUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setFeedback("Thank you! Your message has been sent successfully.");
+        setFormData({ name: "", email: "", message: "", honeypot: "" });
+      } else {
+        const errorData = await res.json().catch(() => null);
+        setStatus("error");
+        setFeedback(
+          errorData?.error || "Submission failed. Please reach out via direct email below."
+        );
+      }
+    } catch (err) {
+      console.error("Contact form error:", err);
+      setStatus("error");
+      setFeedback("Network connection error. Please email directly via the link below.");
     }
-
-    const mailtoSubject = encodeURIComponent(`Portfolio Inquiry from ${formData.name.trim()}`);
-    const mailtoBody = encodeURIComponent(
-      `Hi Sujal,\n\n${formData.message.trim()}\n\nFrom: ${formData.name.trim()} (${formData.email.trim()})`
-    );
-    window.location.href = `mailto:${PERSONAL_INFO.socials.email}?subject=${mailtoSubject}&body=${mailtoBody}`;
-
-    setStatus("success");
-    setFeedback("Draft opened in your email client. Message was also copied to clipboard!");
-    setFormData({ name: "", email: "", message: "", honeypot: "" });
   };
 
   const handleBackToTop = (e: React.MouseEvent) => {
@@ -91,7 +111,7 @@ export default function Contact() {
         <div>
           <div className="mb-4">
             <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold">
-              04 / Contact
+              05 / Contact
             </span>
             <h2
               id="contact-heading"
@@ -237,14 +257,24 @@ export default function Contact() {
                   )}
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={status === "loading"}
-                  className="px-5 py-2 rounded-full bg-[var(--accent)] text-slate-950 font-semibold text-xs hover:bg-[var(--accent-hover)] disabled:opacity-50 transition-colors flex items-center justify-center gap-2 min-h-[36px]"
-                >
-                  <Send className="w-3 h-3" />
-                  <span>{status === "loading" ? "Sending..." : "Send Message"}</span>
-                </button>
+                <div className="flex items-center justify-between pt-1">
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="px-5 py-2 rounded-full bg-[var(--accent)] text-slate-950 font-semibold text-xs hover:bg-[var(--accent-hover)] disabled:opacity-50 transition-colors flex items-center justify-center gap-2 min-h-[36px]"
+                  >
+                    <Send className="w-3 h-3" />
+                    <span>{status === "loading" ? "Sending..." : "Send Message"}</span>
+                  </button>
+
+                  <a
+                    href={`mailto:${PERSONAL_INFO.socials.email}?subject=Portfolio%20Inquiry`}
+                    className="text-[11px] font-mono text-[var(--muted-dark)] hover:text-[var(--accent)] transition-colors inline-flex items-center gap-1"
+                  >
+                    <Mail className="w-3 h-3" />
+                    <span>Or send via mail client &rarr;</span>
+                  </a>
+                </div>
               </form>
             </div>
           </div>

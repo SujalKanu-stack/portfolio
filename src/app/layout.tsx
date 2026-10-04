@@ -22,7 +22,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sujalkanu.dev";
+import { PERSONAL_INFO } from "@/data/content";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sujalkanu-stack.github.io/portfolio";
 
 export const metadata: Metadata = {
   title: "Sujal Kumar Kanu | Portfolio",
@@ -42,7 +44,7 @@ export const metadata: Metadata = {
   creator: "Sujal Kumar Kanu",
   metadataBase: new URL(siteUrl),
   alternates: {
-    canonical: "/",
+    canonical: siteUrl,
   },
   openGraph: {
     title: "Sujal Kumar Kanu | Portfolio",
@@ -77,8 +79,8 @@ export default function RootLayout({
     jobTitle: "Computer Science & Engineering Student",
     url: siteUrl,
     sameAs: [
-      "https://github.com/SujalKanu-stack",
-      "https://www.linkedin.com/in/sujal-kumar-kanu/",
+      PERSONAL_INFO.socials.github,
+      PERSONAL_INFO.socials.linkedin,
     ],
     alumniOf: {
       "@type": "CollegeOrUniversity",
