@@ -43,7 +43,7 @@ export const PERSONAL_INFO = {
   ],
   socials: {
     github: "https://github.com/SujalKanu-stack",
-    linkedin: "https://linkedin.com/in/sujal-kanu",
+    linkedin: "https://www.linkedin.com/in/sujal-kumar-kanu/",
     email: "sujalguptaa121@gmail.com",
   },
   resumePath: "/Sujal_Kumar_Kanu_Resume.pdf",

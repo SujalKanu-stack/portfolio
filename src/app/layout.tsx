@@ -78,7 +78,7 @@ export default function RootLayout({
     url: siteUrl,
     sameAs: [
       "https://github.com/SujalKanu-stack",
-      "https://linkedin.com/in/sujal-kanu",
+      "https://www.linkedin.com/in/sujal-kumar-kanu/",
     ],
     alumniOf: {
       "@type": "CollegeOrUniversity",
