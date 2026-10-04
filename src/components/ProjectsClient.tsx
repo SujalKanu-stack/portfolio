@@ -300,7 +300,7 @@ export default function ProjectsClient({
                   href={featuredProject.repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="AgriChain, opens GitHub in a new tab"
+                  aria-label="AgriChain repository, opens in a new tab"
                   className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[var(--accent)] text-slate-950 text-[11px] font-semibold hover:bg-[var(--accent-hover)] transition-colors focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
                 >
                   <span>Repository</span>
@@ -334,7 +334,7 @@ export default function ProjectsClient({
                       {hasRepo ? (
                         <ArrowUpRight className="w-3.5 h-3.5 text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono bg-white/5 text-[var(--muted-dark)] border border-white/5">
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono bg-white/5 text-[var(--muted)] border border-white/5">
                           <Lock className="w-2.5 h-2.5 opacity-60" />
                           <span>Private</span>
                         </span>
@@ -351,7 +351,7 @@ export default function ProjectsClient({
                       {project.stack.slice(0, 3).map((tech) => (
                         <span
                           key={tech}
-                          className="text-[9px] font-mono px-1.5 py-0.5 bg-white/5 text-[var(--muted-dark)] rounded"
+                          className="text-[9px] font-mono px-1.5 py-0.5 bg-white/5 text-[var(--muted)] rounded"
                         >
                           {tech}
                         </span>

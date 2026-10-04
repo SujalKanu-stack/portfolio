@@ -10,6 +10,8 @@ if (process.env.GITHUB_REPOSITORY) {
 const defaultBasePath =
   isGithubActions && repoName && !repoName.endsWith(".github.io")
     ? `/${repoName}`
+    : process.env.NODE_ENV === "production"
+    ? "/portfolio"
     : "";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? defaultBasePath;

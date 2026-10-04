@@ -19,7 +19,7 @@ export default function Hero() {
       <div className="ambient-hero-glow" aria-hidden="true" />
 
       <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12 flex flex-col justify-between">
-        <div className="my-auto flex flex-col-reverse md:flex-row items-center gap-8 lg:gap-14">
+        <div className="pt-2 flex flex-col-reverse md:flex-row items-center gap-8 lg:gap-14">
           <HeroClient
             hasResume={hasResume}
             resumePath={PERSONAL_INFO.resumePath}

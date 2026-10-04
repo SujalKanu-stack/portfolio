@@ -87,8 +87,8 @@ async function runLayoutCheck() {
         }, sectionId);
       }
 
-      // Wait for Lenis scroll to settle
-      await page.waitForTimeout(600);
+      // Wait for Lenis scroll and idle snap to fully settle
+      await page.waitForTimeout(1000);
 
       // Measure section metrics
       const metrics = await page.evaluate(

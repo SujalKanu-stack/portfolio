@@ -8,7 +8,7 @@
   --surface-hover: #261F1A;
   --text: #F7F3EE;
   --muted: #C5BCB2;
-  --muted-dark: #8E867C;
+  --muted-dark: #9F978C;
   --accent: #FF7A1A;
   --accent-hover: #FF9240;
   --accent-subtle: rgba(255, 122, 26, 0.12);
@@ -135,7 +135,7 @@ body {
     min-height: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
   }
 }
