@@ -5,9 +5,9 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, message, honeypot } = body;
 
-    // Honeypot spam protection
+    // Honeypot spam protection (silent return for bots)
     if (honeypot) {
-      return NextResponse.json({ success: true, message: "Message sent successfully" });
+      return NextResponse.json({ success: true, message: "Message received." });
     }
 
     // Server-side validation
@@ -33,36 +33,46 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check for configured email dispatcher (e.g. Resend)
+    // Check for configured email dispatcher (Resend)
     const resendApiKey = process.env.RESEND_API_KEY;
-    if (resendApiKey) {
-      const response = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendApiKey}`,
-          "Content-Type": "application/json",
+    if (!resendApiKey) {
+      // Per prompt instructions: return an error (not 200) when email delivery is not configured
+      console.warn("[Contact API] RESEND_API_KEY is not configured in .env.local.");
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Email service is pending configuration. Please email directly at sujalguptaa121@gmail.com.",
         },
-        body: JSON.stringify({
-          from: "Portfolio Contact <onboarding@resend.dev>",
-          to: ["sujalguptaa121@gmail.com"],
-          subject: `Portfolio Message from ${name.trim()}`,
-          text: `Name: ${name.trim()}\nEmail: ${email.trim()}\n\nMessage:\n${message.trim()}`,
-        }),
-      });
+        { status: 503 }
+      );
+    }
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Resend API error:", errorData);
-        // Fallback gracefully
-      }
-    } else {
-      // In development or when key is not set, log message
-      console.log(`[Contact Form] From: ${name} (${email})\nMessage: ${message}`);
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Portfolio Contact <onboarding@resend.dev>",
+        to: ["sujalguptaa121@gmail.com"],
+        subject: `Portfolio Message from ${name.trim()}`,
+        text: `Name: ${name.trim()}\nEmail: ${email.trim()}\n\nMessage:\n${message.trim()}`,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Resend API error:", errorData);
+      return NextResponse.json(
+        { success: false, error: "Email delivery failed. Please email directly." },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({
       success: true,
-      message: "Thank you for reaching out! Your message was received.",
+      message: "Thank you for reaching out! Your message was delivered.",
     });
   } catch (error) {
     console.error("Contact API error:", error);

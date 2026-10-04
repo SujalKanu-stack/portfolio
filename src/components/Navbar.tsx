@@ -17,7 +17,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const sections = NAV_ITEMS.map((item) => document.getElementById(item.id));
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + window.innerHeight * 0.4;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
@@ -33,11 +33,23 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const elem = document.getElementById(id);
+    if (elem) {
+      if (window.__lenis) {
+        window.__lenis.scrollTo(elem, { duration: 1.1 });
+      } else {
+        elem.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <header className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
       <nav
         aria-label="Main Navigation"
-        className="pointer-events-auto flex items-center gap-1 p-1.5 rounded-full bg-[#0a1424]/85 backdrop-blur-md border border-white/10 shadow-xl shadow-black/30 transition-all"
+        className="pointer-events-auto flex items-center gap-1 p-1.5 rounded-full bg-[#110e0c]/85 backdrop-blur-md border border-white/10 shadow-xl shadow-black/40 transition-all"
       >
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
@@ -47,11 +59,13 @@ export default function Navbar() {
             <a
               key={item.id}
               href={`#${item.id}`}
+              onClick={(e) => handleNavClick(e, item.id)}
+              aria-label={item.label}
               aria-current={isActive ? "page" : undefined}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 min-h-[36px] ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 min-h-[34px] ${
                 isActive
-                  ? "bg-[#00D8F6] text-slate-950 font-semibold shadow-sm"
-                  : "text-slate-300 hover:text-white hover:bg-white/5"
+                  ? "bg-[var(--accent)] text-slate-950 font-semibold shadow-sm"
+                  : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-white/5"
               }`}
             >
               <Icon className="w-3.5 h-3.5" />

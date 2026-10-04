@@ -17,10 +17,12 @@ const caveat = Caveat({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#060B14",
+  themeColor: "#FF7A1A",
   width: "device-width",
   initialScale: 1,
 };
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sujalkanu.dev";
 
 export const metadata: Metadata = {
   title: "Sujal Kumar Kanu | Portfolio",
@@ -38,7 +40,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Sujal Kumar Kanu", url: "https://github.com/SujalKanu-stack" }],
   creator: "Sujal Kumar Kanu",
-  metadataBase: new URL("https://sujalkanu.dev"), // TODO(Sujal): update with your final domain
+  metadataBase: new URL(siteUrl),
   alternates: {
     canonical: "/",
   },
@@ -46,7 +48,7 @@ export const metadata: Metadata = {
     title: "Sujal Kumar Kanu | Portfolio",
     description:
       "Third-year B.E. CSE student at BMSIT&M Bengaluru building full-stack web, blockchain smart contracts, and applied AI systems.",
-    url: "https://sujalkanu.dev",
+    url: siteUrl,
     siteName: "Sujal Kumar Kanu Portfolio",
     locale: "en_US",
     type: "website",
@@ -73,7 +75,7 @@ export default function RootLayout({
     "@type": "Person",
     name: "Sujal Kumar Kanu",
     jobTitle: "Computer Science & Engineering Student",
-    url: "https://sujalkanu.dev",
+    url: siteUrl,
     sameAs: [
       "https://github.com/SujalKanu-stack",
       "https://linkedin.com/in/sujal-kanu",
@@ -96,6 +98,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme="ember"
       className={`${inter.variable} ${caveat.variable} h-full antialiased`}
     >
       <head>
@@ -103,8 +106,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <noscript>
+          <style>{`#boot-overlay { display: none !important; }`}</style>
+        </noscript>
       </head>
-      <body className="min-h-full flex flex-col bg-[#070e1a] text-slate-100 selection:bg-[#00D8F6] selection:text-slate-950">
+      <body className="min-h-full flex flex-col selection:bg-[var(--accent)] selection:text-black">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>

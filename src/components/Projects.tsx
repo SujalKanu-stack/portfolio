@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { PROJECTS, ProjectItem } from "@/data/content";
-import { ExternalLink, ArrowUpRight, CheckCircle } from "lucide-react";
+import { ExternalLink, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { GithubIcon } from "./SocialIcons";
 import Image from "next/image";
 
@@ -12,187 +12,163 @@ export default function Projects() {
   const agrichainDiskPath = path.join(process.cwd(), "public", "projects", "agrichain.png");
   const hasAgrichainImage = fs.existsSync(agrichainDiskPath);
 
+  if (!hasAgrichainImage && process.env.NODE_ENV === "development") {
+    console.warn("[Projects] Notice: Place your AgriChain screenshot at /public/projects/agrichain.png");
+  }
+
   return (
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="py-16 md:py-24 px-6 max-w-5xl mx-auto border-t border-white/5"
+      className="screen-panel w-full"
     >
-      <div className="mb-10">
-        <h2
-          id="projects-heading"
-          className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-100 mb-2"
-        >
-          Featured Work
-        </h2>
-        <p className="text-sm sm:text-base text-slate-400">
-          Decentralized supply chains, applied AI systems, and interactive simulations.
-        </p>
-      </div>
-
-      {/* 1. Large Featured Project Card: AgriChain */}
-      <article className="rounded-2xl bg-[#0B1728] border border-white/10 overflow-hidden mb-14 shadow-xl">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-          {/* Left / Top: Mockup Preview or Neutral Fallback */}
-          <div className="lg:col-span-6 bg-[#081220] p-6 sm:p-8 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-white/10 relative min-h-[280px]">
-            {hasAgrichainImage ? (
-              <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 shadow-lg">
-                <Image
-                  src="/projects/agrichain.png"
-                  alt={`${featuredProject.title} interface screenshot`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ) : (
-              <div className="flex flex-col items-center justify-center p-8 text-center bg-[#0d1c30] rounded-xl border border-dashed border-white/15">
-                <div className="w-12 h-12 rounded-lg bg-[#00D8F6]/10 text-[#00D8F6] flex items-center justify-center font-mono text-sm font-bold mb-3">
-                  ETH
-                </div>
-                <h4 className="text-sm font-bold text-slate-200">
-                  {featuredProject.title} Prototype
-                </h4>
-                <p className="text-xs text-slate-400 mt-1 max-w-xs">
-                  Polygon Amoy Smart Contracts &bull; 4-Tier Provenance Lifecycle
-                </p>
-                <span className="mt-3 px-2.5 py-1 text-[11px] font-mono bg-yellow-400/10 text-yellow-300 border border-yellow-400/25 rounded-md">
-                  TODO(Sujal): add /public/projects/agrichain.png
-                </span>
-              </div>
-            )}
+      <div className="max-w-[1200px] w-full mx-auto px-6 md:px-12 my-auto pt-16 pb-8">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold">
+              02 / Projects
+            </span>
+            <h2
+              id="projects-heading"
+              className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)]"
+            >
+              Featured Systems
+            </h2>
           </div>
+        </div>
 
-          {/* Right: Technical Details & Architecture */}
-          <div className="lg:col-span-6 p-6 sm:p-8 flex flex-col justify-between">
+        {/* 12-Column Grid: 7/12 Featured Card on Left, 5/12 Index on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          {/* Left Column (7/12): Featured AgriChain Card */}
+          <div className="lg:col-span-7 flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-[var(--surface)] border border-white/10 shadow-lg relative">
             <div>
               <div className="flex items-center justify-between gap-3 mb-2">
-                <span className="text-xs font-mono text-[#00D8F6] uppercase tracking-wider font-semibold">
-                  Featured Case Study &bull; {featuredProject.year}
+                <span className="text-[11px] font-mono text-[var(--accent)] uppercase tracking-wider font-semibold">
+                  Primary Architecture &bull; {featuredProject.year}
+                </span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 text-[var(--muted)] border border-white/5">
+                  Polygon Amoy
                 </span>
               </div>
 
-              <h3 className="text-2xl font-bold text-slate-100 mb-2">
+              <h3 className="text-xl font-bold text-[var(--text)] mb-1">
                 {featuredProject.title}
               </h3>
-              
-              <p className="text-xs sm:text-sm text-[#00D8F6]/90 font-medium mb-4">
+
+              <p className="text-xs text-[var(--accent)] font-medium mb-3">
                 {featuredProject.tagline}
               </p>
 
-              <p className="text-sm text-slate-300 leading-relaxed mb-5">
-                {featuredProject.description}
-              </p>
+              {/* Mockup or Refined Prototype Frame */}
+              <div className="relative w-full aspect-[21/9] rounded-xl overflow-hidden bg-[var(--bg-1)] border border-white/10 mb-3 flex items-center justify-center">
+                {hasAgrichainImage ? (
+                  <Image
+                    src="/projects/agrichain.png"
+                    alt={`${featuredProject.title} preview`}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center p-3 text-center">
+                    <span className="text-xs font-mono font-bold text-[var(--text)]">
+                      4-Tier Provenance & Fraud Detection Engine
+                    </span>
+                    <span className="text-[10px] font-mono text-[var(--muted)] mt-0.5">
+                      Farmer &bull; Distributor &bull; Retailer &bull; Consumer
+                    </span>
+                  </div>
+                )}
+              </div>
 
-              {/* What I Built checklist */}
-              {featuredProject.features && (
-                <div className="space-y-2 mb-6">
-                  <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                    What I Engineered:
-                  </h4>
-                  <ul className="space-y-1.5">
-                    {featuredProject.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-xs text-slate-300 leading-normal">
-                        <CheckCircle className="w-3.5 h-3.5 text-[#00D8F6] flex-shrink-0 mt-0.5" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              {/* 3 "What I Built" bullets */}
+              <ul className="space-y-1 mb-3">
+                {featuredProject.features?.slice(0, 3).map((feature, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-[11px] text-[var(--muted)]">
+                    <CheckCircle2 className="w-3 h-3 text-[var(--accent)] flex-shrink-0 mt-0.5" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-              {/* Stack Badges */}
-              <div className="flex flex-wrap gap-1.5 mb-6">
-                {featuredProject.stack.map((tech) => (
+            <div className="flex items-center justify-between pt-3 border-t border-white/5 mt-auto">
+              <div className="flex flex-wrap gap-1">
+                {featuredProject.stack.slice(0, 4).map((tech) => (
                   <span
                     key={tech}
-                    className="px-2.5 py-1 text-xs font-mono bg-white/5 border border-white/10 rounded text-slate-300"
+                    className="px-2 py-0.5 text-[10px] font-mono bg-white/5 text-[var(--muted)] rounded border border-white/5"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
-            </div>
 
-            {/* Links */}
-            <div className="flex items-center gap-3 pt-4 border-t border-white/10">
-              {featuredProject.liveUrl && (
-                <a
-                  href={featuredProject.liveUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#00D8F6] text-slate-950 font-semibold text-xs hover:bg-[#33E1F8] transition-colors"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Explore System</span>
-                </a>
-              )}
-              {featuredProject.githubUrl && (
-                <a
-                  href={featuredProject.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-slate-200 hover:text-white hover:bg-white/10 text-xs font-medium transition-colors"
-                >
-                  <GithubIcon className="w-3.5 h-3.5" />
-                  <span>Smart Contracts / Repo</span>
-                </a>
-              )}
+              <div className="flex items-center gap-2">
+                {featuredProject.liveUrl && (
+                  <a
+                    href={featuredProject.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-1.5 rounded-lg bg-[var(--accent)] text-slate-950 hover:bg-[var(--accent-hover)] transition-colors"
+                    aria-label="Explore AgriChain"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                {featuredProject.githubUrl && (
+                  <a
+                    href={featuredProject.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-[var(--text)] hover:bg-white/10 transition-colors"
+                    aria-label="View AgriChain repository"
+                  >
+                    <GithubIcon className="w-3.5 h-3.5" />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </article>
 
-      {/* 2. Project Index List */}
-      <div>
-        <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">
-          Other Projects & System Implementations
-        </h3>
-
-        <div className="divide-y divide-white/5 border-y border-white/5">
-          {otherProjects.map((project: ProjectItem) => (
-            <div
-              key={project.id}
-              className="py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group hover:bg-white/[0.02] px-2 rounded-lg transition-colors"
-            >
-              <div className="max-w-xl">
-                <div className="flex items-center gap-3 mb-1">
-                  <h4 className="text-base font-bold text-slate-200 group-hover:text-[#00D8F6] transition-colors">
+          {/* Right Column (5/12): Compact Index of Other 4 Projects */}
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-2">
+            {otherProjects.map((project: ProjectItem) => (
+              <a
+                key={project.id}
+                href={project.githubUrl || "#"}
+                target="_blank"
+                rel="noreferrer"
+                className="group flex flex-col justify-between p-3 rounded-xl bg-[var(--surface)] border border-white/5 hover:border-[var(--accent)] hover:bg-[var(--surface-hover)] transition-all duration-200"
+              >
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
                     {project.title}
                   </h4>
-                  <span className="text-xs font-mono text-slate-500">
-                    {project.year}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] font-mono text-[var(--muted-dark)]">
+                      {project.year}
+                    </span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  </div>
                 </div>
-                <p className="text-xs sm:text-sm text-slate-400 mb-2">
+
+                <p className="text-[11px] text-[var(--muted)] line-clamp-1 mt-0.5">
                   {project.tagline}
                 </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.stack.map((tech) => (
+
+                <div className="flex flex-wrap gap-1 mt-1.5">
+                  {project.stack.slice(0, 3).map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-0.5 text-[11px] font-mono bg-white/5 text-slate-300 rounded"
+                      className="text-[9px] font-mono px-1.5 py-0.5 bg-white/5 text-[var(--muted-dark)] rounded"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`View ${project.title} repository`}
-                    className="p-2 rounded-lg text-slate-400 hover:text-[#00D8F6] hover:bg-white/5 transition-all"
-                  >
-                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </section>
