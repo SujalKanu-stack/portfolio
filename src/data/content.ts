@@ -22,6 +22,8 @@ export interface ProjectItem {
   tagline: string;
   description: string;
   stack: string[];
+  status: "completed" | "in-progress";
+  visibility?: "private" | "public";
   year?: string;
   features?: string[];
   bullets?: string[];
@@ -41,49 +43,11 @@ export interface JourneyItem {
   credentialUrl?: string;
 }
 
-export const PERSONAL_INFO = {
-  name: "Sujal Kumar Kanu",
-  role: "Computer Science & Engineering Student",
-  institution: "BMS Institute of Technology & Management (VTU)",
-  location: "Bengaluru, India",
-  tagline: "Exploring full-stack systems, blockchain protocols, and applied generative AI.",
-  bio: [
-    "I am a third-year Computer Science and Engineering student at BMS Institute of Technology & Management in Bengaluru, studying since 2023.",
-    "My focus centers on full-stack web engineering, smart contract development, and applied generative AI systems.",
-    "Right now I'm learning generative AI: how large language models work, prompt engineering, and building AI agents. Next I want to build an agent end to end, while continuing to explore network security.",
-    // TODO(Sujal): add the framework or course you are using (e.g. LangChain, LlamaIndex, or specific AI agent course)
-    "Outside coursework, I experiment with decentralized systems and participate in 24-hour hackathons.",
-  ],
-  languages: ["Bhojpuri", "Hindi", "Nepali", "English"],
-  stats: [
-    { value: "3", label: "Shipped Projects" },
-    { value: "2", label: "National Hackathons" },
-    { value: "3", label: "Technical Certifications" },
-  ],
-  socials: {
-    github: "https://github.com/SujalKanu-stack",
-    // TODO(Sujal): confirm which LinkedIn URL is correct (resume says sujal-kanu vs sujal-kumar-kanu)
-    linkedin: "https://www.linkedin.com/in/sujal-kanu",
-    email: "sujalguptaa121@gmail.com",
-  },
-  resumePath: withBase("/Sujal_Kumar_Kanu_Resume.pdf"),
-};
-
-export const TECH_LOGOS = [
-  { name: "Python", slug: "python" },
-  { name: "JavaScript", slug: "javascript" },
-  { name: "React", slug: "react" },
-  { name: "Node.js", slug: "nodedotjs" },
-  { name: "Solidity", slug: "solidity" },
-  { name: "Docker", slug: "docker" },
-  { name: "Git", slug: "git" },
-  { name: "Linux", slug: "linux" },
-];
-
 export const PROJECTS: ProjectItem[] = [
   {
     id: "agrichain",
     featured: true,
+    status: "completed",
     title: "AgriChain",
     tagline: "Blockchain agricultural supply chain with automated fraud detection",
     description:
@@ -102,10 +66,12 @@ export const PROJECTS: ProjectItem[] = [
   {
     id: "research-collab-hub",
     featured: false,
+    status: "in-progress",
     title: "Research Collab Hub",
     tagline: "Collaborative research paper workspace with AI abstract decomposition",
     description:
-      "A unified platform for academic research teams featuring versioned paper drafting, BibTeX export, conference deadline calendars, and automated co-author matching via the Claude API.",
+      "A collaborative research paper platform with automated paper versioning triggers, BibTeX citation export, and conference deadline tracking; Claude API pipelines for abstract decomposition, venue suitability analysis, and co-author matching.",
+    // TODO(Sujal): confirm which of these features actually work, and edit the bullets to match.
     // TODO(Sujal): add year
     // TODO(Sujal): add repoUrl if you make the repository public
     stack: ["FastAPI", "React 18", "PostgreSQL 16", "Redis", "Docker", "Claude API"],
@@ -118,6 +84,7 @@ export const PROJECTS: ProjectItem[] = [
   {
     id: "cardiosim-3d",
     featured: false,
+    status: "completed",
     title: "CardioSim 3D",
     tagline: "Interactive 3D cardiac anatomy and arrhythmia simulation",
     description:
@@ -135,6 +102,7 @@ export const PROJECTS: ProjectItem[] = [
   {
     id: "iot-weather",
     featured: false,
+    status: "completed",
     title: "IoT Weather Monitoring System",
     tagline: "Microcontroller telemetry for ambient temperature, humidity, and barometric pressure",
     description:
@@ -146,22 +114,6 @@ export const PROJECTS: ProjectItem[] = [
       "Atmospheric sensor array recording ambient temperature, humidity, and barometric pressure",
       "Calibrated transducer telemetry with edge-level signal filtering",
       "Real-time climate logging interface for continuous physical environment monitoring",
-    ],
-  },
-  {
-    id: "matlab-modelling",
-    featured: false,
-    title: "Statistical Modelling & Curve Fitting in MATLAB",
-    tagline: "Numerical analysis, regression curves, and error distribution modelling",
-    description:
-      "Parametric and non-parametric data modelling evaluating goodness-of-fit across physical and statistical experimental datasets.",
-    year: "Oct - Nov 2025",
-    // TODO(Sujal): add repoUrl if you make the repository public
-    stack: ["MATLAB", "Regression", "Curve fitting", "Residual analysis"],
-    bullets: [
-      "Parametric non-linear least squares regression across empirical datasets",
-      "Residual variance minimization and R-squared goodness-of-fit validation",
-      "Comparative regression curves evaluating polynomial, exponential, and power models",
     ],
   },
 ];
@@ -219,4 +171,52 @@ export const JOURNEY: JourneyItem[] = [
     institution: "NepaTronix x National Infotech",
     details: "Hands-on microcontroller programming, sensor integration, and motor actuation circuits.",
   },
+];
+
+export const PERSONAL_INFO = {
+  name: "Sujal Kumar Kanu",
+  role: "Computer Science & Engineering Student",
+  institution: "BMS Institute of Technology & Management (VTU)",
+  location: "Bengaluru, India",
+  tagline: "Exploring full-stack systems, blockchain protocols, and applied generative AI.",
+  bio: [
+    "I am a third-year Computer Science and Engineering student at BMS Institute of Technology & Management in Bengaluru, studying since 2023.",
+    "My focus centers on full-stack web engineering, smart contract development, and applied generative AI systems.",
+    "Right now I'm learning generative AI: how large language models work, prompt engineering, and building AI agents. Next I want to build an agent end to end, while continuing to explore network security.",
+    // TODO(Sujal): add the framework or course you are using (e.g. LangChain, LlamaIndex, or specific AI agent course)
+    "Outside coursework, I experiment with decentralized systems and participate in 24-hour hackathons.",
+  ],
+  languages: ["Bhojpuri", "Hindi", "Nepali", "English"],
+  stats: [
+    {
+      value: PROJECTS.filter((p) => p.status === "completed").length.toString(),
+      label: "Projects built",
+    },
+    {
+      value: JOURNEY.filter((j) => j.category === "Hackathon").length.toString(),
+      label: "National Hackathons",
+    },
+    {
+      value: JOURNEY.filter((j) => j.category === "Certification").length.toString(),
+      label: "Technical Certifications",
+    },
+  ],
+  socials: {
+    github: "https://github.com/SujalKanu-stack",
+    // TODO(Sujal): confirm which LinkedIn URL is correct (resume says sujal-kanu vs sujal-kumar-kanu)
+    linkedin: "https://www.linkedin.com/in/sujal-kanu",
+    email: "sujalguptaa121@gmail.com",
+  },
+  resumePath: withBase("/Sujal_Kumar_Kanu_Resume.pdf"),
+};
+
+export const TECH_LOGOS = [
+  { name: "Python", slug: "python" },
+  { name: "JavaScript", slug: "javascript" },
+  { name: "React", slug: "react" },
+  { name: "Node.js", slug: "nodedotjs" },
+  { name: "Solidity", slug: "solidity" },
+  { name: "Docker", slug: "docker" },
+  { name: "Git", slug: "git" },
+  { name: "Linux", slug: "linux" },
 ];

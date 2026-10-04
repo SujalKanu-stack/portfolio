@@ -259,3 +259,43 @@ textarea:focus-visible {
     opacity: 0.08 !important;
   }
 }
+
+/* Native Project Dialog & Bottom Sheet */
+dialog.project-dialog {
+  margin: auto;
+}
+
+dialog.project-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 639px) {
+  dialog.project-dialog {
+    margin: auto auto 0 auto;
+    width: 100%;
+    max-width: 100vw;
+  }
+}
+
+@keyframes dialogFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-dialog-in {
+  animation: dialogFadeIn 180ms ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-dialog-in {
+    animation: none !important;
+  }
+}
+

@@ -10,10 +10,11 @@ const VIEWPORTS = [
 
 const SECTIONS = ["home", "about", "projects", "journey", "contact"];
 const CERT_KEYWORDS = ["Certification", "Infosys", "MathWorks", "NepaTronix"];
+const FORBIDDEN_PROJECTS_KEYWORDS = ["MATLAB", "Curve", "Residual", "Regression"];
 
 async function runLayoutCheck() {
   console.log("================================================================================");
-  console.log("            PLAYWRIGHT SECTION LAYOUT & SNAP AUDIT CHECK                        ");
+  console.log("            PLAYWRIGHT SECTION LAYOUT & SNAP AUDIT CHECK (v4)                  ");
   console.log("================================================================================\n");
 
   const screenshotDir = path.join(process.cwd(), "audit-screenshots");
@@ -35,6 +36,7 @@ async function runLayoutCheck() {
 
   const tableResults = [];
   let certIsolationPass = true;
+  let matlabIsolationPass = true;
 
   for (const vp of VIEWPORTS) {
     console.log(`\n--- Auditing Viewport: ${vp.name} (${vp.width}x${vp.height}) ---`);
@@ -49,26 +51,42 @@ async function runLayoutCheck() {
     await page.goto(targetUrl, { waitUntil: "networkidle" });
     await page.waitForTimeout(600);
 
-    // Certifications isolation check (run once on primary viewport)
+    // Certifications isolation and MATLAB removal check (run once on primary viewport)
     if (vp.name === "1366x768") {
-      const certCheck = await page.evaluate((keywords) => {
-        const projectsEl = document.querySelector("#projects");
-        const journeyEl = document.querySelector("#journey");
+      const domChecks = await page.evaluate(
+        ({ certKeywords, forbiddenKeywords }) => {
+          const projectsEl = document.querySelector("#projects");
+          const journeyEl = document.querySelector("#journey");
 
-        const projectsText = projectsEl ? projectsEl.textContent || "" : "";
-        const journeyText = journeyEl ? journeyEl.textContent || "" : "";
+          const projectsText = projectsEl ? projectsEl.textContent || "" : "";
+          const journeyText = journeyEl ? journeyEl.textContent || "" : "";
 
-        const leaked = keywords.filter((kw) => projectsText.includes(kw));
-        const presentInJourney = keywords.every((kw) => journeyText.includes(kw));
+          const certsLeakedInProjects = certKeywords.filter((kw) => projectsText.includes(kw));
+          const certsPresentInJourney = certKeywords.every((kw) => journeyText.includes(kw));
 
-        return { leaked, presentInJourney };
-      }, CERT_KEYWORDS);
+          const forbiddenLeakedInProjects = forbiddenKeywords.filter((kw) => projectsText.includes(kw));
 
-      if (certCheck.leaked.length > 0 || !certCheck.presentInJourney) {
+          return {
+            certsLeakedInProjects,
+            certsPresentInJourney,
+            forbiddenLeakedInProjects,
+          };
+        },
+        { certKeywords: CERT_KEYWORDS, forbiddenKeywords: FORBIDDEN_PROJECTS_KEYWORDS }
+      );
+
+      if (domChecks.certsLeakedInProjects.length > 0 || !domChecks.certsPresentInJourney) {
         certIsolationPass = false;
-        console.error(`[FAIL] Certifications isolation test failed! Leaked in projects: ${certCheck.leaked.join(", ")}`);
+        console.error(`[FAIL] Certifications isolation test failed! Leaked in projects: ${domChecks.certsLeakedInProjects.join(", ")}`);
       } else {
         console.log(`[PASS] Certifications Isolation: All keywords present in #journey and 0 in #projects.`);
+      }
+
+      if (domChecks.forbiddenLeakedInProjects.length > 0) {
+        matlabIsolationPass = false;
+        console.error(`[FAIL] MATLAB project leaked into #projects DOM: ${domChecks.forbiddenLeakedInProjects.join(", ")}`);
+      } else {
+        console.log(`[PASS] MATLAB Removal: Zero references to MATLAB / Curve in #projects DOM.`);
       }
     }
 
@@ -92,7 +110,7 @@ async function runLayoutCheck() {
 
       // Measure section metrics
       const metrics = await page.evaluate(
-        ({ id, prevId, nextId, vh }) => {
+        ({ id, prevId, nextId, vh, vw }) => {
           const sec = document.getElementById(id);
           const nav = document.querySelector("header nav");
           const navBottom = nav ? nav.getBoundingClientRect().bottom : 50;
@@ -138,6 +156,16 @@ async function runLayoutCheck() {
           }
           const zeroAdjacentVisible = prevVisible <= 2 && nextVisible <= 2;
 
+          // (e) Task 5: Side index active label bounding box check (right <= window.innerWidth - 8)
+          const sideIndexLabel = document.querySelector(`[data-testid="side-index-label-${id}"]`);
+          let sideIndexPass = true;
+          let sideIndexRight = 0;
+          if (sideIndexLabel) {
+            const sRect = sideIndexLabel.getBoundingClientRect();
+            sideIndexRight = Math.round(sRect.right);
+            sideIndexPass = sRect.right <= vw - 8;
+          }
+
           return {
             id,
             rectTop: rect.top,
@@ -151,6 +179,8 @@ async function runLayoutCheck() {
             prevVisible: Math.round(prevVisible),
             nextVisible: Math.round(nextVisible),
             zeroAdjacentVisible,
+            sideIndexRight,
+            sideIndexPass,
           };
         },
         {
@@ -158,6 +188,7 @@ async function runLayoutCheck() {
           prevId: i > 0 ? SECTIONS[i - 1] : null,
           nextId: i < SECTIONS.length - 1 ? SECTIONS[i + 1] : null,
           vh: vp.height,
+          vw: vp.width,
         }
       );
 
@@ -166,7 +197,8 @@ async function runLayoutCheck() {
           metrics.topAligned &&
           metrics.contentFits &&
           metrics.gapPass &&
-          metrics.zeroAdjacentVisible;
+          metrics.zeroAdjacentVisible &&
+          metrics.sideIndexPass;
 
         tableResults.push({
           viewport: vp.name,
@@ -178,11 +210,13 @@ async function runLayoutCheck() {
           gap: `${metrics.gapVh}vh`,
           gapStatus: metrics.gapPass ? "PASS" : "FAIL",
           adjacent: `p:${metrics.prevVisible}px, n:${metrics.nextVisible}px`,
+          sideIndex: `${metrics.sideIndexRight}px (<= ${vp.width - 8}px)`,
+          sideIndexStatus: metrics.sideIndexPass ? "PASS" : "FAIL",
           overall: pass ? "PASS" : "FAIL",
         });
 
         console.log(
-          `  [${pass ? "PASS" : "FAIL"}] #${sectionId.padEnd(8)} | TopDiff: ${metrics.topDiff.toFixed(1)}px | Gap: ${metrics.gapVh}vh | Fit: ${metrics.contentFits ? "YES" : "NO"} | Adj: ${metrics.zeroAdjacentVisible ? "0px" : "FAIL"}`
+          `  [${pass ? "PASS" : "FAIL"}] #${sectionId.padEnd(8)} | TopDiff: ${metrics.topDiff.toFixed(1)}px | Gap: ${metrics.gapVh}vh | Fit: ${metrics.contentFits ? "YES" : "NO"} | SideIndex: ${metrics.sideIndexPass ? "PASS" : "FAIL"}`
         );
 
         // Save screenshot
@@ -201,14 +235,19 @@ async function runLayoutCheck() {
   console.log("================================================================================");
   console.table(tableResults);
   console.log(`\nCertifications Isolation in #journey DOM: ${certIsolationPass ? "PASS" : "FAIL"}`);
+  console.log(`MATLAB Removal from #projects DOM: ${matlabIsolationPass ? "PASS" : "FAIL"}`);
   console.log(`Audit screenshots stored in: ${screenshotDir}\n`);
 
-  const hasFailures = tableResults.some((r) => r.overall === "FAIL") || !certIsolationPass;
+  const hasFailures =
+    tableResults.some((r) => r.overall === "FAIL") ||
+    !certIsolationPass ||
+    !matlabIsolationPass;
+
   if (hasFailures) {
     console.error("Layout audit detected issues. Review the table above.");
     process.exit(1);
   } else {
-    console.log("All sections passed 100svh layout and flush snap checks!");
+    console.log("All sections passed 100svh layout, flush snap, and side-index checks!");
   }
 }
 

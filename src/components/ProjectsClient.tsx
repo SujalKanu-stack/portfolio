@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { ProjectItem, SECTIONS } from "@/data/content";
-import { ArrowUpRight, CheckCircle2, ChevronDown, ChevronUp, Lock } from "lucide-react";
-import { GithubIcon } from "./SocialIcons";
+import { ArrowUpRight, CheckCircle2, Info } from "lucide-react";
 import Image from "next/image";
 import { withBase } from "@/lib/basePath";
+import ProjectDialog from "./ProjectDialog";
 
 export default function ProjectsClient({
   featuredProject,
@@ -16,11 +16,16 @@ export default function ProjectsClient({
   otherProjects: ProjectItem[];
   hasAgrichainImage: boolean;
 }) {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+  const [activeTrigger, setActiveTrigger] = useState<HTMLElement | null>(null);
 
-  const toggleExpand = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setExpandedId((curr) => (curr === id ? null : id));
+  const openDialog = (project: ProjectItem, e: React.MouseEvent<HTMLElement>) => {
+    setActiveTrigger(e.currentTarget);
+    setSelectedProject(project);
+  };
+
+  const closeDialog = () => {
+    setSelectedProject(null);
   };
 
   return (
@@ -29,7 +34,7 @@ export default function ProjectsClient({
       aria-labelledby="projects-heading"
       className="screen-panel w-full"
     >
-      <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12">
+      <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12 flex flex-col justify-center my-auto">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-3">
           <div>
@@ -59,21 +64,10 @@ export default function ProjectsClient({
                 </span>
               </div>
 
-              <div className="flex items-start justify-between gap-2 mb-1">
-                <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">
+              <div className="mb-1">
+                <h3 className="text-lg sm:text-xl font-bold text-[var(--text)] leading-snug">
                   {featuredProject.title}
                 </h3>
-                {featuredProject.repoUrl && (
-                  <a
-                    href={featuredProject.repoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${featuredProject.title}, opens GitHub in a new tab`}
-                    className="p-1 rounded text-[var(--muted)] hover:text-[var(--accent)] transition-colors focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
-                  >
-                    <GithubIcon className="w-4 h-4" />
-                  </a>
-                )}
               </div>
 
               <p className="text-xs text-[var(--accent)] font-medium mb-2.5">
@@ -279,7 +273,7 @@ export default function ProjectsClient({
               </ul>
             </div>
 
-            {/* Bottom Stack & Direct Link */}
+            {/* Bottom Stack & Single Direct Repository Link */}
             <div className="flex items-center justify-between pt-2 border-t border-white/5 mt-auto">
               <div className="flex flex-wrap gap-1">
                 {featuredProject.stack
@@ -310,22 +304,33 @@ export default function ProjectsClient({
             </div>
           </div>
 
-          {/* Right Column (5/12): Equal-Height 4-Row Index */}
-          <div className="lg:col-span-5 grid grid-rows-4 gap-2.5 h-full">
+          {/* Right Column (5/12): Equal-Height 3-Row Index */}
+          <div className="lg:col-span-5 grid grid-rows-3 gap-3 h-full">
             {otherProjects.map((project: ProjectItem) => {
               const hasRepo = Boolean(project.repoUrl);
-              const isExpanded = expandedId === project.id;
+              const isInProgress = project.status === "in-progress";
+              const isPrivate = project.visibility === "private";
 
-              const content = (
+              const innerContent = (
                 <>
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <h4 className="text-xs font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors truncate">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 pr-2">
+                      <h4 className="text-xs sm:text-sm font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-2 leading-tight">
                         {project.title}
                       </h4>
                     </div>
 
-                    <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
+                      {isInProgress && (
+                        <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-amber-500/10 text-amber-400 border border-amber-500/20 font-semibold tracking-wide">
+                          In progress
+                        </span>
+                      )}
+                      {isPrivate && (
+                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-white/5 text-[var(--muted)] border border-white/5">
+                          Private
+                        </span>
+                      )}
                       {project.year && (
                         <span className="text-[10px] font-mono text-[var(--muted-dark)] font-medium">
                           {project.year}
@@ -334,19 +339,19 @@ export default function ProjectsClient({
                       {hasRepo ? (
                         <ArrowUpRight className="w-3.5 h-3.5 text-[var(--muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono bg-white/5 text-[var(--muted)] border border-white/5">
-                          <Lock className="w-2.5 h-2.5 opacity-60" />
-                          <span>Private</span>
+                        <span className="inline-flex items-center gap-1 text-[10px] font-mono text-[var(--muted-dark)] group-hover:text-[var(--accent)] transition-colors">
+                          <Info className="w-3 h-3" />
+                          <span>Details</span>
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <p className="text-[11px] text-[var(--muted)] line-clamp-1 mt-0.5">
-                    {project.tagline}
+                  <p className="text-[11px] text-[var(--muted)] line-clamp-2 mt-1 leading-snug">
+                    {project.description}
                   </p>
 
-                  <div className="flex items-center justify-between mt-1">
+                  <div className="flex items-center justify-between mt-2 pt-1 border-t border-white/5">
                     <div className="flex flex-wrap gap-1">
                       {project.stack.slice(0, 3).map((tech) => (
                         <span
@@ -358,35 +363,12 @@ export default function ProjectsClient({
                       ))}
                     </div>
 
-                    {!hasRepo && project.bullets && (
-                      <button
-                        type="button"
-                        onClick={(e) => toggleExpand(project.id, e)}
-                        className="text-[10px] font-mono text-[var(--muted)] hover:text-[var(--accent)] flex items-center gap-0.5 focus:outline-none"
-                        aria-expanded={isExpanded}
-                        aria-label={`Toggle details for ${project.title}`}
-                      >
-                        <span>{isExpanded ? "Close" : "Details"}</span>
-                        {isExpanded ? (
-                          <ChevronUp className="w-3 h-3" />
-                        ) : (
-                          <ChevronDown className="w-3 h-3" />
-                        )}
-                      </button>
+                    {!hasRepo && (
+                      <span className="text-[10px] font-mono text-[var(--accent)] font-medium opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity">
+                        View architecture &rarr;
+                      </span>
                     )}
                   </div>
-
-                  {/* Inline Expanded Details for Private Projects */}
-                  {isExpanded && project.bullets && (
-                    <div className="mt-2 pt-2 border-t border-white/10 space-y-1">
-                      {project.bullets.map((b, i) => (
-                        <div key={i} className="flex items-start gap-1 text-[10px] text-[var(--muted)]">
-                          <span className="text-[var(--accent)] font-mono">&bull;</span>
-                          <span>{b}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </>
               );
 
@@ -397,26 +379,38 @@ export default function ProjectsClient({
                     href={project.repoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${project.title}, opens GitHub repository in a new tab`}
-                    className="group flex flex-col justify-center p-3 rounded-xl bg-[var(--surface)] border border-white/5 hover:border-[var(--accent)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer focus-visible:border-[var(--accent)]"
+                    aria-label={`${project.title} repository, opens in a new tab`}
+                    className="group flex flex-col justify-between p-3.5 rounded-xl bg-[var(--surface)] border border-white/5 hover:border-[var(--accent)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
                   >
-                    {content}
+                    {innerContent}
                   </a>
                 );
               }
 
               return (
-                <div
+                <button
                   key={project.id}
-                  className="flex flex-col justify-center p-3 rounded-xl bg-[var(--surface)] border border-white/5 transition-all duration-200"
+                  type="button"
+                  onClick={(e) => openDialog(project, e)}
+                  aria-haspopup="dialog"
+                  aria-label={`${project.title}, opens architecture details dialog`}
+                  className="group flex flex-col justify-between p-3.5 rounded-xl bg-[var(--surface)] border border-white/5 hover:border-[var(--accent)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] w-full"
                 >
-                  {content}
-                </div>
+                  {innerContent}
+                </button>
               );
             })}
           </div>
         </div>
       </div>
+
+      {/* Project Details Modal Dialog */}
+      <ProjectDialog
+        project={selectedProject}
+        isOpen={Boolean(selectedProject)}
+        onClose={closeDialog}
+        triggerElement={activeTrigger}
+      />
     </section>
   );
 }

@@ -36,7 +36,7 @@ export default function SideIndex() {
     const elem = document.getElementById(id);
     if (elem) {
       if (window.__lenis) {
-        window.__lenis.scrollTo(elem, { duration: 1.1 });
+        window.__lenis.scrollTo(elem, { duration: 0.9, offset: 0 });
       } else {
         elem.scrollIntoView({ behavior: "smooth" });
       }
@@ -51,10 +51,10 @@ export default function SideIndex() {
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
       />
 
-      {/* Right side indicator: desktop only (>= 1024px) */}
+      {/* Right side indicator: desktop only (>= 1024px), anchored with safe area padding */}
       <nav
         aria-label="Section Index"
-        className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-3 pointer-events-auto select-none"
+        className="fixed right-[max(16px,env(safe-area-inset-right))] top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-end gap-3 pointer-events-auto select-none"
       >
         {SECTIONS.map((section) => {
           const isActive = activeId === section.id;
@@ -63,19 +63,24 @@ export default function SideIndex() {
               key={section.id}
               onClick={() => scrollTo(section.id)}
               aria-current={isActive ? "true" : undefined}
-              className="group flex items-center justify-end gap-2.5 py-1 text-right focus:outline-none"
+              aria-label={`Jump to section ${section.label}`}
+              className="group flex items-center justify-end py-1 text-right focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] rounded"
             >
+              {/* Label positioned strictly to the LEFT of the dot, expanding leftwards */}
               <span
-                className={`text-[11px] font-mono tracking-wider transition-all duration-200 ${
+                data-testid={`side-index-label-${section.id}`}
+                className={`text-[11px] font-mono tracking-wider whitespace-nowrap mr-2.5 transition-all duration-200 pointer-events-none ${
                   isActive
                     ? "text-[var(--accent)] font-semibold opacity-100 translate-x-0"
-                    : "text-[var(--muted-dark)] opacity-0 group-hover:opacity-100 group-hover:text-[var(--muted)] translate-x-2 group-hover:translate-x-0"
+                    : "text-[var(--muted-dark)] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 group-hover:text-[var(--muted)] translate-x-1 group-hover:translate-x-0 group-focus-visible:translate-x-0"
                 }`}
               >
                 {section.label}
               </span>
+
+              {/* Dot on the right */}
               <span
-                className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-200 flex-shrink-0 ${
                   isActive
                     ? "bg-[var(--accent)] scale-150 ring-2 ring-[var(--accent)]/30"
                     : "bg-white/20 group-hover:bg-white/60"

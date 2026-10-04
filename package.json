@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "check": "node scripts/check-links.mjs",
-    "check:layout": "node scripts/check-layout.mjs"
+    "check:layout": "node scripts/check-layout.mjs",
+    "check:dialog": "node scripts/check-dialog.mjs"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^13.15.1",
