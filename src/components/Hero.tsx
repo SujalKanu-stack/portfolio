@@ -19,7 +19,7 @@ export default function Hero() {
       <div className="ambient-hero-glow" aria-hidden="true" />
 
       <div className="portfolio-container flex flex-col justify-between flex-1 h-full min-h-0">
-        <div className="pt-2 sm:pt-4 my-auto flex flex-col-reverse md:flex-row items-center gap-8 lg:gap-14">
+        <div className="pt-1 sm:pt-4 my-auto flex flex-col-reverse md:flex-row items-center gap-5 sm:gap-8 lg:gap-14">
           <HeroClient
             hasResume={hasResume}
             resumePath={PERSONAL_INFO.resumePath}

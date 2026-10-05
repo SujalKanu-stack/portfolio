@@ -38,7 +38,7 @@ export default function Navbar() {
     const elem = document.getElementById(id);
     if (elem) {
       if (window.__lenis) {
-        window.__lenis.scrollTo(elem, { duration: 0.7, offset: -16 });
+        window.__lenis.scrollTo(elem, { duration: 0.7, offset: 0 });
       } else {
         elem.scrollIntoView({ behavior: "smooth" });
       }
@@ -46,10 +46,10 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
+    <header className="fixed top-2.5 sm:top-4 inset-x-0 z-50 flex justify-center px-2 sm:px-4 pointer-events-none">
       <nav
         aria-label="Main Navigation"
-        className="pointer-events-auto flex items-center gap-1 p-1.5 rounded-full bg-[#110e0c]/85 backdrop-blur-md border border-white/10 shadow-xl shadow-black/40 transition-all"
+        className="pointer-events-auto flex items-center gap-0.5 sm:gap-1 p-1 sm:p-1.5 rounded-full bg-[#110e0c]/90 backdrop-blur-md border border-white/10 shadow-2xl shadow-black/60 transition-all max-w-fit mx-auto"
       >
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
@@ -62,13 +62,13 @@ export default function Navbar() {
               onClick={(e) => handleNavClick(e, item.id)}
               aria-label={item.label}
               aria-current={isActive ? "page" : undefined}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 min-h-[34px] ${
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 min-h-[36px] min-w-[36px] justify-center ${
                 isActive
                   ? "bg-[var(--accent)] text-slate-950 font-semibold shadow-sm"
                   : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-white/5"
               }`}
             >
-              <Icon className="w-3.5 h-3.5" />
+              <Icon className="w-3.5 h-3.5 flex-shrink-0" />
               <span className="hidden sm:inline">{item.label}</span>
             </a>
           );

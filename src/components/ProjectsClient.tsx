@@ -36,7 +36,7 @@ export default function ProjectsClient({
     >
       <div className="portfolio-container">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-6 sm:mb-8">
+        <div className="flex items-center justify-between mb-5 sm:mb-8">
           <div>
             <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold block mb-1">
               {SECTIONS[2].eyebrow}
@@ -53,7 +53,7 @@ export default function ProjectsClient({
         {/* 12-Column Grid: 7/12 Featured Card on Left, 5/12 Index on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
           {/* Left Column (7/12): Featured AgriChain Card */}
-          <div className="lg:col-span-7 flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-[var(--surface)] border border-white/10 shadow-lg relative group/card">
+          <div className="lg:col-span-7 flex flex-col justify-between p-4 sm:p-5 md:p-6 rounded-2xl bg-[var(--surface)] border border-white/10 shadow-lg relative group/card">
             <div>
               <div className="flex items-center justify-between gap-3 mb-1.5">
                 <span className="text-[10px] font-mono text-[var(--accent)] uppercase tracking-wider font-semibold">
@@ -274,7 +274,7 @@ export default function ProjectsClient({
             </div>
 
             {/* Bottom Stack & Single Direct Repository Link */}
-            <div className="flex items-center justify-between pt-2 border-t border-white/5 mt-auto">
+            <div className="flex flex-wrap items-center justify-between gap-2.5 pt-2.5 border-t border-white/5 mt-auto">
               <div className="flex flex-wrap gap-1">
                 {featuredProject.stack
                   .filter((t) => t !== "Polygon Amoy") // Avoid duplicate tag since badge already displays Polygon Amoy
@@ -295,7 +295,7 @@ export default function ProjectsClient({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="AgriChain repository, opens in a new tab"
-                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[var(--accent)] text-slate-950 text-[11px] font-semibold hover:bg-[var(--accent-hover)] transition-colors focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+                  className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-[var(--accent)] text-slate-950 text-[11px] font-semibold hover:bg-[var(--accent-hover)] transition-colors focus-visible:ring-1 focus-visible:ring-[var(--accent)] min-h-[34px]"
                 >
                   <span>Repository</span>
                   <ArrowUpRight className="w-3 h-3" />

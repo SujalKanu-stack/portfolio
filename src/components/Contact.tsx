@@ -122,7 +122,7 @@ export default function Contact() {
     >
       <div className="portfolio-container flex flex-col">
         <div>
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-5 sm:mb-8">
             <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold block mb-1">
               05 / Contact
             </span>
@@ -134,7 +134,7 @@ export default function Contact() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-8 items-start">
             {/* Left Column (5/12): Direct email & socials */}
             <div className="lg:col-span-5 space-y-4">
               <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed">
@@ -142,7 +142,7 @@ export default function Contact() {
               </p>
 
               {/* Direct email card with copy */}
-              <div className="p-3 rounded-xl bg-[var(--surface)] border border-white/5 flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-[var(--surface)] border border-white/5 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 min-w-0">
                   <Mail className="w-3.5 h-3.5 text-[var(--accent)] flex-shrink-0" />
                   <a
@@ -156,7 +156,7 @@ export default function Contact() {
                   type="button"
                   onClick={copyEmail}
                   aria-label="Copy email address"
-                  className="p-1 rounded text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+                  className="p-1 rounded text-[var(--muted)] hover:text-[var(--text)] transition-colors flex-shrink-0"
                 >
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                 </button>
@@ -164,7 +164,7 @@ export default function Contact() {
 
               {/* Direct phone card with copy */}
               {PERSONAL_INFO.socials.phone && (
-                <div className="p-3 rounded-xl bg-[var(--surface)] border border-white/5 flex items-center justify-between">
+                <div className="p-3 rounded-xl bg-[var(--surface)] border border-white/5 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
                     <Phone className="w-3.5 h-3.5 text-[var(--accent)] flex-shrink-0" />
                     <a
@@ -178,33 +178,33 @@ export default function Contact() {
                     type="button"
                     onClick={copyPhone}
                     aria-label="Copy phone number"
-                    className="p-1 rounded text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+                    className="p-1 rounded text-[var(--muted)] hover:text-[var(--text)] transition-colors flex-shrink-0"
                   >
                     {copiedPhone ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
                 </div>
               )}
 
-              {/* Social links & Resume */}
-              <div className="flex gap-2">
+              {/* Social links & Resume - 3-column equal grid on all viewports */}
+              <div className="grid grid-cols-3 gap-2 w-full">
                 <a
                   href={PERSONAL_INFO.socials.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-1.5 transition-colors min-h-[38px]"
+                  className="p-2 sm:p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-[11px] sm:text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-1.5 transition-colors min-h-[42px]"
                 >
-                  <GithubIcon className="w-3.5 h-3.5 text-[var(--accent)]" />
-                  <span className="font-mono text-xs">GitHub</span>
+                  <GithubIcon className="w-3.5 h-3.5 text-[var(--accent)] flex-shrink-0" />
+                  <span className="font-mono truncate">GitHub</span>
                 </a>
 
                 <a
                   href={PERSONAL_INFO.socials.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-1.5 transition-colors min-h-[38px]"
+                  className="p-2 sm:p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-[11px] sm:text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-1.5 transition-colors min-h-[42px]"
                 >
-                  <LinkedinIcon className="w-3.5 h-3.5 text-[var(--accent)]" />
-                  <span className="font-mono text-xs">LinkedIn</span>
+                  <LinkedinIcon className="w-3.5 h-3.5 text-[var(--accent)] flex-shrink-0" />
+                  <span className="font-mono truncate">LinkedIn</span>
                 </a>
 
                 <a
@@ -212,10 +212,10 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="View or download resume PDF"
-                  className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-1.5 transition-colors min-h-[38px]"
+                  className="p-2 sm:p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-[11px] sm:text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-1.5 transition-colors min-h-[42px]"
                 >
-                  <FileText className="w-3.5 h-3.5 text-[var(--accent)]" />
-                  <span className="font-mono text-xs">Resume</span>
+                  <FileText className="w-3.5 h-3.5 text-[var(--accent)] flex-shrink-0" />
+                  <span className="font-mono truncate">Resume</span>
                 </a>
               </div>
             </div>
@@ -224,7 +224,7 @@ export default function Contact() {
             <div className="lg:col-span-7">
               <form
                 onSubmit={handleSubmit}
-                className="p-5 sm:p-6 rounded-2xl bg-[var(--surface)] border border-white/10 space-y-3 shadow-xl"
+                className="p-4 sm:p-6 rounded-2xl bg-[var(--surface)] border border-white/10 space-y-3.5 sm:space-y-4 shadow-xl"
               >
                 {/* Honeypot field for bot detection */}
                 <div className="hidden" aria-hidden="true">
@@ -252,7 +252,7 @@ export default function Contact() {
                       placeholder="Jane Doe"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg bg-[var(--bg-1)] border border-white/10 text-[var(--text)] text-xs focus:border-[var(--accent)] focus:outline-none transition-colors"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--bg-1)] border border-white/10 text-[var(--text)] text-xs sm:text-sm focus:border-[var(--accent)] focus:outline-none transition-colors min-h-[42px]"
                     />
                   </div>
 
@@ -267,7 +267,7 @@ export default function Contact() {
                       placeholder="jane@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg bg-[var(--bg-1)] border border-white/10 text-[var(--text)] text-xs focus:border-[var(--accent)] focus:outline-none transition-colors"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--bg-1)] border border-white/10 text-[var(--text)] text-xs sm:text-sm focus:border-[var(--accent)] focus:outline-none transition-colors min-h-[42px]"
                     />
                   </div>
                 </div>
@@ -279,11 +279,11 @@ export default function Contact() {
                   <textarea
                     id="message"
                     required
-                    rows={3}
+                    rows={4}
                     placeholder="Hi Sujal, I checked your AgriChain project and..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg bg-[var(--bg-1)] border border-white/10 text-[var(--text)] text-xs focus:border-[var(--accent)] focus:outline-none transition-colors resize-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[var(--bg-1)] border border-white/10 text-[var(--text)] text-xs sm:text-sm focus:border-[var(--accent)] focus:outline-none transition-colors resize-none"
                   />
                 </div>
 
@@ -304,21 +304,21 @@ export default function Contact() {
                   )}
                 </div>
 
-                <div className="flex items-center justify-between pt-1">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2">
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="px-5 py-2 rounded-full bg-[var(--accent)] text-slate-950 font-semibold text-xs hover:bg-[var(--accent-hover)] disabled:opacity-50 transition-colors flex items-center justify-center gap-2 min-h-[36px]"
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[var(--accent)] text-slate-950 font-semibold text-xs sm:text-sm hover:bg-[var(--accent-hover)] disabled:opacity-50 transition-colors flex items-center justify-center gap-2 min-h-[42px] cursor-pointer shadow-md shadow-[var(--accent)]/15"
                   >
-                    <Send className="w-3 h-3" />
+                    <Send className="w-3.5 h-3.5" />
                     <span>{status === "loading" ? "Sending..." : "Send Message"}</span>
                   </button>
 
                   <a
                     href={`mailto:${PERSONAL_INFO.socials.email}?subject=Portfolio%20Inquiry`}
-                    className="text-[11px] font-mono text-[var(--muted-dark)] hover:text-[var(--accent)] transition-colors inline-flex items-center gap-1"
+                    className="text-center sm:text-right text-[11px] sm:text-xs font-mono text-[var(--muted-dark)] hover:text-[var(--accent)] transition-colors inline-flex items-center justify-center sm:justify-end gap-1.5 py-1"
                   >
-                    <Mail className="w-3 h-3" />
+                    <Mail className="w-3.5 h-3.5" />
                     <span>Or send via mail client &rarr;</span>
                   </a>
                 </div>
@@ -328,12 +328,12 @@ export default function Contact() {
         </div>
 
         {/* Integrated 1-line Footer at the bottom of the contact section */}
-        <div className="pt-6 sm:pt-8 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-[var(--muted-dark)] mt-12 sm:mt-16">
+        <div className="pt-6 sm:pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-center sm:text-left text-[10px] sm:text-[11px] font-mono text-[var(--muted-dark)] mt-10 sm:mt-16">
           <p>&copy; {new Date().getFullYear()} Sujal Kumar Kanu &bull; BMSIT&M Bengaluru</p>
           <a
             href="#home"
             onClick={handleBackToTop}
-            className="flex items-center gap-1 hover:text-[var(--accent)] transition-colors focus:outline-none"
+            className="flex items-center gap-1 hover:text-[var(--accent)] transition-colors focus:outline-none py-1"
           >
             <span>Top</span>
             <ArrowUp className="w-3 h-3" />

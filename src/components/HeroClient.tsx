@@ -90,7 +90,7 @@ export default function HeroClient({
     const target = document.getElementById("projects");
     if (target) {
       if (window.__lenis) {
-        window.__lenis.scrollTo(target, { duration: 1.1 });
+        window.__lenis.scrollTo(target, { duration: 1.1, offset: 0 });
       } else {
         target.scrollIntoView({ behavior: "smooth" });
       }
@@ -98,19 +98,19 @@ export default function HeroClient({
   };
 
   return (
-    <div className="flex-1 text-center md:text-left">
+    <div className="flex-1 text-center md:text-left w-full max-w-xl mx-auto md:mx-0">
       {/* Motto Tag Pill with Rotating Text */}
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--surface)] border border-white/10 text-xs font-medium tracking-wide mb-4">
-        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
-        <span className="text-[var(--muted)] font-mono text-[11px]">Specializing in</span>
-        <span className="font-handwriting text-sm text-[var(--accent)] min-w-[130px] inline-block text-left">
+      <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 rounded-full bg-[var(--surface)] border border-white/10 text-xs font-medium tracking-wide mb-3 sm:mb-4 max-w-full">
+        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse flex-shrink-0" />
+        <span className="text-[var(--muted)] font-mono text-[10px] sm:text-[11px] whitespace-nowrap">Specializing in</span>
+        <span className="font-handwriting text-xs sm:text-sm text-[var(--accent)] min-w-[105px] sm:min-w-[130px] inline-block text-left truncate">
           {displayText}
           <span className="inline-block w-1 h-3.5 bg-[var(--accent)] ml-0.5 align-middle animate-pulse" />
         </span>
       </div>
 
       {/* Main Title with Decrypted Name */}
-      <h1 className="text-3xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight text-[var(--text)] leading-tight mb-3">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[var(--text)] leading-tight mb-2.5 sm:mb-3">
         Hi, I&apos;m{" "}
         <span className="text-[var(--accent)] hand-drawn-underline font-mono">
           {displayName}
@@ -119,35 +119,35 @@ export default function HeroClient({
       </h1>
 
       {/* Two-line concise intro */}
-      <p className="text-sm sm:text-base text-[var(--muted)] max-w-lg leading-relaxed mb-6">
+      <p className="text-xs sm:text-sm md:text-base text-[var(--muted)] max-w-lg leading-relaxed mb-5 sm:mb-6 mx-auto md:mx-0">
         Third-year Computer Science & Engineering student at BMSIT&M Bengaluru.
         I engineer decentralized supply-chain protocols, full-stack web platforms, and applied generative AI systems.
       </p>
 
-      {/* Action Buttons */}
-      <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-6">
+      {/* Action Buttons - Stacked on mobile (<640px), row on tablet & desktop */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center md:justify-start gap-2.5 sm:gap-3 mb-5 sm:mb-6 w-full max-w-xs sm:max-w-none mx-auto md:mx-0">
         <a
           href="#projects"
           onClick={handleScrollToProjects}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--accent)] text-slate-950 font-semibold text-xs hover:bg-[var(--accent-hover)] transition-all shadow-md shadow-[var(--accent)]/15 min-h-[40px]"
+          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[var(--accent)] text-slate-950 font-semibold text-xs sm:text-sm hover:bg-[var(--accent-hover)] transition-all shadow-md shadow-[var(--accent)]/15 min-h-[42px] w-full sm:w-auto"
         >
           <span>View my work</span>
           <ArrowDown className="w-3.5 h-3.5" />
         </a>
 
         {hasResume ? (
-          <div className="inline-flex items-center rounded-full bg-white/5 border border-white/15 hover:border-[var(--accent)] hover:bg-[var(--accent-subtle)] transition-all min-h-[40px] overflow-hidden group">
+          <div className="inline-flex items-center justify-between sm:justify-start rounded-full bg-white/5 border border-white/15 hover:border-[var(--accent)] hover:bg-[var(--accent-subtle)] transition-all min-h-[42px] overflow-hidden group w-full sm:w-auto">
             <a
               href={resumePath}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View resume in new tab"
-              className="inline-flex items-center gap-2 pl-4 pr-2.5 py-2.5 text-[var(--text)] group-hover:text-[var(--accent)] text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 pl-4 pr-2.5 py-2.5 text-[var(--text)] group-hover:text-[var(--accent)] text-xs sm:text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
             >
               <FileText className="w-3.5 h-3.5 text-[var(--accent)]" />
               <span>View resume</span>
             </a>
-            <span className="w-px h-3.5 bg-white/15" aria-hidden="true" />
+            <span className="w-px h-4 bg-white/15" aria-hidden="true" />
             <a
               href={resumePath}
               download="Sujal_Kumar_Kanu_Resume_2026.pdf"
@@ -162,7 +162,7 @@ export default function HeroClient({
           <button
             type="button"
             disabled
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-[var(--muted-dark)] text-xs font-medium cursor-not-allowed min-h-[40px]"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-[var(--muted-dark)] text-xs font-medium cursor-not-allowed min-h-[42px] w-full sm:w-auto"
           >
             <FileText className="w-3.5 h-3.5 opacity-50" />
             <span>Resume coming soon</span>
@@ -177,7 +177,7 @@ export default function HeroClient({
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub profile"
-          className="w-9 h-9 rounded-lg bg-[var(--surface)] border border-white/10 text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--border-active)] hover:bg-[var(--surface-hover)] flex items-center justify-center transition-all duration-200"
+          className="w-10 h-10 sm:w-9 sm:h-9 rounded-lg bg-[var(--surface)] border border-white/10 text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--border-active)] hover:bg-[var(--surface-hover)] flex items-center justify-center transition-all duration-200"
         >
           <GithubIcon className="w-4 h-4" />
         </a>
@@ -187,7 +187,7 @@ export default function HeroClient({
           target="_blank"
           rel="noreferrer"
           aria-label="LinkedIn profile"
-          className="w-9 h-9 rounded-lg bg-[var(--surface)] border border-white/10 text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--border-active)] hover:bg-[var(--surface-hover)] flex items-center justify-center transition-all duration-200"
+          className="w-10 h-10 sm:w-9 sm:h-9 rounded-lg bg-[var(--surface)] border border-white/10 text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--border-active)] hover:bg-[var(--surface-hover)] flex items-center justify-center transition-all duration-200"
         >
           <LinkedinIcon className="w-4 h-4" />
         </a>
@@ -195,7 +195,7 @@ export default function HeroClient({
         <a
           href={`mailto:${socials.email}`}
           aria-label="Send direct email"
-          className="w-9 h-9 rounded-lg bg-[var(--surface)] border border-white/10 text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--border-active)] hover:bg-[var(--surface-hover)] flex items-center justify-center transition-all duration-200"
+          className="w-10 h-10 sm:w-9 sm:h-9 rounded-lg bg-[var(--surface)] border border-white/10 text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--border-active)] hover:bg-[var(--surface-hover)] flex items-center justify-center transition-all duration-200"
         >
           <span className="font-mono text-xs font-bold text-[var(--accent)]">@</span>
         </a>

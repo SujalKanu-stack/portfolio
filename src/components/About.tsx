@@ -11,7 +11,7 @@ export default function About() {
     >
       <div className="portfolio-container">
         {/* Section Header */}
-        <div className="mb-6 sm:mb-8">
+        <div className="mb-5 sm:mb-8">
           <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold block mb-1">
             {SECTIONS[1].eyebrow}
           </span>
@@ -23,11 +23,11 @@ export default function About() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-12 items-start">
           {/* Left Column (7/12): Narrative */}
           <div className="lg:col-span-7 flex flex-col justify-start">
             {/* Concise Handwritten Voice */}
-            <div className="space-y-4 font-handwriting text-lg sm:text-xl text-slate-300 leading-relaxed">
+            <div className="space-y-3.5 sm:space-y-4 font-handwriting text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed">
               <p>
                 I study Computer Science and Engineering at BMSIT&M in Bengaluru, where I&apos;ve been building software since 2024.
               </p>
@@ -41,10 +41,10 @@ export default function About() {
           </div>
 
           {/* Right Column (5/12): Stack + At a Glance Stats + Languages */}
-          <div className="lg:col-span-5 flex flex-col justify-start space-y-5 lg:border-l lg:border-white/5 lg:pl-10">
+          <div className="lg:col-span-5 flex flex-col justify-start space-y-4 sm:space-y-5 lg:border-l lg:border-white/5 lg:pl-8 xl:pl-10">
             {/* Core Technologies 4x2 grid */}
             <div>
-              <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--muted)] mb-2.5">
+              <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--muted)] mb-2 sm:mb-2.5">
                 Core technologies
               </h3>
               <TechLogos />
@@ -52,19 +52,19 @@ export default function About() {
 
             {/* At a glance */}
             <div>
-              <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--muted)] mb-2.5">
+              <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--muted)] mb-2 sm:mb-2.5">
                 At a glance
               </h3>
-              <div className="grid grid-cols-3 gap-2.5 max-w-sm mb-2.5">
+              <div className="grid grid-cols-3 gap-2 sm:gap-2.5 max-w-sm mb-2 sm:mb-2.5">
                 {PERSONAL_INFO.stats.map((stat, i) => (
                   <div
                     key={i}
-                    className="p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-center flex flex-col justify-center"
+                    className="p-2 sm:p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-center flex flex-col justify-center min-h-[58px]"
                   >
-                    <span className="text-lg font-extrabold text-[var(--accent)] font-mono">
+                    <span className="text-base sm:text-lg font-extrabold text-[var(--accent)] font-mono leading-none">
                       {stat.value}
                     </span>
-                    <span className="text-[10px] text-[var(--muted)] mt-0.5 leading-tight font-medium">
+                    <span className="text-[9px] sm:text-[10px] text-[var(--muted)] mt-1 leading-tight font-medium">
                       {stat.label}
                     </span>
                   </div>
@@ -72,7 +72,7 @@ export default function About() {
               </div>
 
               {/* Now Learning compact card */}
-              <div className="p-2.5 px-3 rounded-xl bg-[var(--surface)] border border-white/5 flex items-center justify-between max-w-sm">
+              <div className="p-2.5 px-3 rounded-xl bg-[var(--surface)] border border-white/5 flex items-center justify-between max-w-sm gap-2">
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="relative flex h-2 w-2 flex-shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75" />
@@ -82,7 +82,7 @@ export default function About() {
                     <span className="text-[9px] font-mono text-[var(--muted-dark)] block uppercase tracking-wider">
                       Current Focus
                     </span>
-                    <span className="text-[11px] font-semibold text-[var(--text)] truncate block">
+                    <span className="text-[10px] sm:text-[11px] font-semibold text-[var(--text)] truncate block">
                       Generative AI &bull; LLMs &bull; Agents
                     </span>
                   </div>
@@ -96,7 +96,7 @@ export default function About() {
             {/* Languages spoken */}
             <div className="flex items-center gap-2 text-xs text-[var(--muted)] pt-0.5">
               <Globe2 className="w-3.5 h-3.5 text-[var(--accent)] flex-shrink-0" />
-              <span className="font-mono text-[11px] truncate">
+              <span className="font-mono text-[10px] sm:text-[11px] truncate">
                 {PERSONAL_INFO.languages.join(" • ")}
               </span>
             </div>

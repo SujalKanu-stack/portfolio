@@ -122,33 +122,41 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: calc(var(--nav-h) + 1.25rem);
-  padding-bottom: 1.5rem;
+  padding-top: calc(var(--nav-h) + 1.5rem);
+  padding-bottom: clamp(1.25rem, 3vh, 2rem);
   box-sizing: border-box;
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
+}
+
+@media (min-width: 640px) {
+  .hero-panel {
+    padding-top: calc(var(--nav-h) + 1.75rem);
+  }
 }
 
 .portfolio-section {
   width: 100%;
-  padding-top: 3.5rem;
-  padding-bottom: 3.5rem;
+  padding-top: clamp(4.5rem, 12vw, 6rem);
+  padding-bottom: clamp(3.5rem, 10vw, 5rem);
   box-sizing: border-box;
   position: relative;
-  scroll-margin-top: calc(var(--nav-h) + 1rem);
+  scroll-margin-top: 0;
 }
 
 @media (min-width: 768px) {
   .portfolio-section {
-    padding-top: 4.5rem;
+    padding-top: 5.5rem;
     padding-bottom: 4.5rem;
+    scroll-margin-top: 0;
   }
 }
 
 @media (min-width: 1024px) {
   .portfolio-section {
-    padding-top: 5rem;
+    padding-top: 6rem;
     padding-bottom: 5rem;
+    scroll-margin-top: 0;
   }
 }
 
@@ -157,15 +165,22 @@ body {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: clamp(1rem, 4vw, 1.5rem);
+  padding-right: clamp(1rem, 4vw, 1.5rem);
   box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
   .portfolio-container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .portfolio-container {
     padding-left: 3rem;
-    padding-right: 3rem;
+    padding-right: 5.5rem; /* Extra right clearance for SideIndex navigation to prevent overlap */
   }
 }
 

@@ -12,7 +12,7 @@ export default function ProfilePortrait() {
   }
 
   return (
-    <div className="relative group w-52 h-52 sm:w-60 sm:h-60 lg:w-64 lg:h-64 mx-auto">
+    <div className="relative group w-36 h-36 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto flex-shrink-0">
       {/* Refined subtle frame */}
       <div className="absolute inset-0 bg-gradient-to-tr from-[var(--accent)]/15 to-transparent rounded-2xl transform rotate-1 group-hover:rotate-0 transition-transform duration-300" />
 

@@ -53,7 +53,7 @@ export default function SmoothScroll({
           e.preventDefault();
           lenis.scrollTo(element as HTMLElement, {
             duration: 0.8,
-            offset: -16,
+            offset: 0,
           });
         }
       }

@@ -6,18 +6,18 @@ export default function Journey() {
   const certificationItems = JOURNEY.filter((item) => item.category === "Certification");
 
   const renderColumn = (title: string, items: JourneyItem[]) => (
-    <div className="flex flex-col h-full bg-[var(--surface)] p-5 sm:p-6 rounded-2xl border border-white/5">
-      <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--accent)] mb-3.5 pb-2 border-b border-white/5">
+    <div className="flex flex-col h-full bg-[var(--surface)] p-4 sm:p-5 md:p-6 rounded-2xl border border-white/5">
+      <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--accent)] mb-3 pb-2 border-b border-white/5">
         {title}
       </h3>
 
-      <div className="space-y-4">
+      <div className="space-y-3.5 sm:space-y-4">
         {items.map((item, idx) => (
-          <div key={idx} className="flex gap-3 items-baseline">
-            <span className="text-[10px] font-mono text-[var(--muted-dark)] font-semibold flex-shrink-0 w-16">
+          <div key={idx} className="flex gap-2.5 sm:gap-3 items-baseline">
+            <span className="text-[10px] font-mono text-[var(--muted-dark)] font-semibold flex-shrink-0 w-14 sm:w-16">
               {item.year.includes(" - ") ? "2023 - Pres" : item.year}
             </span>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               {item.credentialUrl ? (
                 <a
                   href={item.credentialUrl}
@@ -55,7 +55,7 @@ export default function Journey() {
       className="portfolio-section"
     >
       <div className="portfolio-container">
-        <div className="mb-6 sm:mb-8">
+        <div className="mb-5 sm:mb-8">
           <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold block mb-1">
             {SECTIONS[3].eyebrow}
           </span>
@@ -68,7 +68,7 @@ export default function Journey() {
         </div>
 
         {/* 3 Equal Columns on Desktop */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch">
           {renderColumn("Education", educationItems)}
           {renderColumn("National Hackathons", hackathonItems)}
           {renderColumn("Certifications", certificationItems)}
