@@ -6,7 +6,7 @@ import HeroClient from "./HeroClient";
 import LiveStatusStrip from "./LiveStatusStrip";
 
 export default function Hero() {
-  const resumeDiskPath = path.join(process.cwd(), "public", "Sujal_Kumar_Kanu_Resume.pdf");
+  const resumeDiskPath = path.join(process.cwd(), "public", "Sujal_Kumar_Kanu_Resume_2026.pdf");
   const hasResume = fs.existsSync(resumeDiskPath);
 
   return (

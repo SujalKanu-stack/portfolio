@@ -84,11 +84,11 @@ server.listen(PORT, async () => {
   console.log(`Loaded page title: "${await page.title()}"`);
 
   // Verify resume PDF serves with 200 OK and PDF mime type
-  const resumeResponse = await page.goto(`http://localhost:${PORT}/portfolio/Sujal_Kumar_Kanu_Resume.pdf`);
+  const resumeResponse = await page.goto(`http://localhost:${PORT}/portfolio/Sujal_Kumar_Kanu_Resume_2026.pdf`);
   if (resumeResponse && resumeResponse.status() === 200) {
-    console.log(`[PASS] Resume PDF successfully served at /portfolio/Sujal_Kumar_Kanu_Resume.pdf (status: ${resumeResponse.status()})`);
+    console.log(`[PASS] Resume PDF successfully served at /portfolio/Sujal_Kumar_Kanu_Resume_2026.pdf (status: ${resumeResponse.status()})`);
   } else {
-    failedRequests.push({ url: `http://localhost:${PORT}/portfolio/Sujal_Kumar_Kanu_Resume.pdf`, status: resumeResponse?.status() || 500 });
+    failedRequests.push({ url: `http://localhost:${PORT}/portfolio/Sujal_Kumar_Kanu_Resume_2026.pdf`, status: resumeResponse?.status() || 500 });
   }
 
   if (failedRequests.length > 0) {

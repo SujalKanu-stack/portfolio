@@ -31,7 +31,7 @@ Because GitHub Pages is a static host without a Node server runtime:
 ## Static Assets & Build-Time Checks
 
 To keep the portfolio authentic and prevent 404s, the build script uses static build-time checks:
-- **Resume PDF**: Place your resume at `public/Sujal_Kumar_Kanu_Resume.pdf`. When present at build time, the "Download resume" button becomes active.
+- **Resume PDF**: Place your resume at `public/Sujal_Kumar_Kanu_Resume_2026.pdf`. When present at build time, the "Download resume" button becomes active.
 - **Profile Photo**: Place your portrait photo at `public/profile.jpg`. When present at build time, it replaces the animated avatar monogram.
 - **Project Screenshot**: Place project screenshots at `public/projects/agrichain.png`. When present, it replaces the clean SVG architecture diagram.
 

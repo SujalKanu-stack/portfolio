@@ -205,7 +205,7 @@ export const PERSONAL_INFO = {
     linkedin: "https://www.linkedin.com/in/sujal-kanu",
     email: "sujalguptaa121@gmail.com",
   },
-  resumePath: withBase("/Sujal_Kumar_Kanu_Resume.pdf"),
+  resumePath: withBase("/Sujal_Kumar_Kanu_Resume_2026.pdf"),
 };
 
 export const TECH_LOGOS = [

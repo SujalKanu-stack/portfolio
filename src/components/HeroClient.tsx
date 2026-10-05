@@ -150,7 +150,7 @@ export default function HeroClient({
             <span className="w-px h-3.5 bg-white/15" aria-hidden="true" />
             <a
               href={resumePath}
-              download="Sujal_Kumar_Kanu_Resume.pdf"
+              download="Sujal_Kumar_Kanu_Resume_2026.pdf"
               aria-label="Download resume PDF"
               title="Download resume PDF"
               className="inline-flex items-center justify-center pl-2.5 pr-4 py-2.5 text-[var(--muted)] hover:text-[var(--accent)] text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
