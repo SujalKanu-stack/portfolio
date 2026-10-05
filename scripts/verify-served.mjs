@@ -19,6 +19,7 @@ const MIME_TYPES = {
   ".woff2": "font/woff2",
   ".txt": "text/plain",
   ".xml": "application/xml",
+  ".pdf": "application/pdf",
 };
 
 // Create local static server mounting out/ at /portfolio
@@ -82,11 +83,19 @@ server.listen(PORT, async () => {
 
   console.log(`Loaded page title: "${await page.title()}"`);
 
+  // Verify resume PDF serves with 200 OK and PDF mime type
+  const resumeResponse = await page.goto(`http://localhost:${PORT}/portfolio/Sujal_Kumar_Kanu_Resume.pdf`);
+  if (resumeResponse && resumeResponse.status() === 200) {
+    console.log(`[PASS] Resume PDF successfully served at /portfolio/Sujal_Kumar_Kanu_Resume.pdf (status: ${resumeResponse.status()})`);
+  } else {
+    failedRequests.push({ url: `http://localhost:${PORT}/portfolio/Sujal_Kumar_Kanu_Resume.pdf`, status: resumeResponse?.status() || 500 });
+  }
+
   if (failedRequests.length > 0) {
     console.error(`\n[FAIL] Found ${failedRequests.length} failed subresource requests:`);
     failedRequests.forEach((f) => console.error(`  - ${f.url} (${f.status})`));
   } else {
-    console.log("\n[PASS] 0 network 404s! All static bundles, fonts, and assets loaded under /portfolio/ successfully.");
+    console.log("\n[PASS] 0 network 404s! All static bundles, fonts, assets, and resume loaded under /portfolio/ successfully.");
   }
 
   await browser.close();

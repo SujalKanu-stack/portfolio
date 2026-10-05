@@ -52,7 +52,7 @@ export const PROJECTS: ProjectItem[] = [
     tagline: "Blockchain agricultural supply chain with automated fraud detection",
     description:
       "A decentralized tracking platform built on Polygon Amoy. It establishes an immutable provenance trail across farmer, distributor, retailer, and consumer while flagging supply chain anomalies in real time.",
-    // TODO(Sujal): add year
+    year: "2026",
     stack: ["Solidity", "Polygon Amoy", "React", "Node/Express", "Ethers.js", "Docker Compose"],
     features: [
       "4-tier lifecycle custody tracking (Farmer -> Distributor -> Retailer -> Consumer)",
@@ -61,7 +61,7 @@ export const PROJECTS: ProjectItem[] = [
       "Integrated courier tracking for active transit legs",
     ],
     repoUrl: "https://github.com/SujalKanu-stack/AgriChain",
-    image: withBase("/projects/agrichain.png"), // TODO(Sujal): add screenshot to public/projects/agrichain.png
+    image: withBase("/projects/agrichain.png"),
   },
   {
     id: "research-collab-hub",
@@ -71,8 +71,7 @@ export const PROJECTS: ProjectItem[] = [
     tagline: "Collaborative research paper workspace with AI abstract decomposition",
     description:
       "A collaborative research paper platform with automated paper versioning triggers, BibTeX citation export, and conference deadline tracking; Claude API pipelines for abstract decomposition, venue suitability analysis, and co-author matching.",
-    // TODO(Sujal): confirm which of these features actually work, and edit the bullets to match.
-    // TODO(Sujal): add year
+    year: "2026",
     repoUrl: "https://github.com/SujalKanu-stack/Research_collab_Hub",
     stack: ["FastAPI", "React 18", "PostgreSQL 16", "Redis", "Docker", "Claude API"],
     bullets: [
@@ -89,8 +88,7 @@ export const PROJECTS: ProjectItem[] = [
     tagline: "Interactive 3D cardiac anatomy and arrhythmia simulation",
     description:
       "Browser-based anatomical simulator allowing 30 to 200 BPM heart pacing, interactive coronary artery blockage models, and an integrated diagnostic quiz for medical students.",
-    // TODO(Sujal): add year
-    // TODO(Sujal): confirm Heart_Sim vs Heart-simulator
+    year: "2026",
     repoUrl: "https://github.com/SujalKanu-stack/Heart_Sim",
     stack: ["Vanilla JS", "WebGL", "Sketchfab API"],
     bullets: [
