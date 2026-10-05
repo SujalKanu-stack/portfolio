@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowDown, FileText } from "lucide-react";
+import { ArrowDown, Download, FileText } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./SocialIcons";
 
 const ROTATING_PHRASES = [
@@ -136,14 +136,28 @@ export default function HeroClient({
         </a>
 
         {hasResume ? (
-          <a
-            href={resumePath}
-            download
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/15 text-[var(--text)] hover:border-[var(--accent)] hover:bg-[var(--accent-subtle)] text-xs font-medium transition-all min-h-[40px]"
-          >
-            <FileText className="w-3.5 h-3.5 text-[var(--accent)]" />
-            <span>Download resume</span>
-          </a>
+          <div className="inline-flex items-center rounded-full bg-white/5 border border-white/15 hover:border-[var(--accent)] hover:bg-[var(--accent-subtle)] transition-all min-h-[40px] overflow-hidden group">
+            <a
+              href={resumePath}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View resume in new tab"
+              className="inline-flex items-center gap-2 pl-4 pr-2.5 py-2.5 text-[var(--text)] group-hover:text-[var(--accent)] text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+            >
+              <FileText className="w-3.5 h-3.5 text-[var(--accent)]" />
+              <span>View resume</span>
+            </a>
+            <span className="w-px h-3.5 bg-white/15" aria-hidden="true" />
+            <a
+              href={resumePath}
+              download="Sujal_Kumar_Kanu_Resume.pdf"
+              aria-label="Download resume PDF"
+              title="Download resume PDF"
+              className="inline-flex items-center justify-center pl-2.5 pr-4 py-2.5 text-[var(--muted)] hover:text-[var(--accent)] text-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+            >
+              <Download className="w-3.5 h-3.5" />
+            </a>
+          </div>
         ) : (
           <button
             type="button"

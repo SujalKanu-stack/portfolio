@@ -20,19 +20,13 @@ export default function ProjectDialog({
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const activeTriggerRef = useRef<HTMLElement | null>(null);
   const scrollYRef = useRef<number>(0);
-  const cachedProjectRef = useRef<ProjectItem | null>(null);
-
-  if (project) {
-    cachedProjectRef.current = project;
-  }
-  const currentProject = project || cachedProjectRef.current;
 
   // Open modal when isOpen changes to true
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
 
-    if (isOpen && currentProject) {
+    if (isOpen && project) {
       activeTriggerRef.current = triggerElement || (document.activeElement as HTMLElement);
       scrollYRef.current = window.scrollY;
 
@@ -48,7 +42,7 @@ export default function ProjectDialog({
       // Preserve exact scroll position
       window.scrollTo({ top: scrollYRef.current, behavior: "instant" });
     }
-  }, [isOpen, currentProject, triggerElement]);
+  }, [isOpen, project, triggerElement]);
 
   const handleClose = () => {
     const dialog = dialogRef.current;
@@ -66,7 +60,7 @@ export default function ProjectDialog({
     // Maintain exact scroll position
     window.scrollTo({ top: targetScrollY, behavior: "instant" });
 
-    // Return focus to triggering button
+    // Return focus to triggering button before unmounting
     if (targetTrigger && typeof targetTrigger.focus === "function") {
       targetTrigger.focus({ preventScroll: true });
     }
@@ -86,10 +80,10 @@ export default function ProjectDialog({
     handleClose();
   };
 
-  if (!currentProject) return null;
+  if (!project) return null;
 
-  const isInProgress = currentProject.status === "in-progress";
-  const isPrivate = currentProject.visibility === "private";
+  const isInProgress = project.status === "in-progress";
+  const isPrivate = project.visibility === "private";
 
   return (
     <dialog
@@ -118,9 +112,9 @@ export default function ProjectDialog({
                   Private
                 </span>
               )}
-              {currentProject.year && (
+              {project.year && (
                 <span className="text-[11px] font-mono text-[var(--muted-dark)] font-medium">
-                  {currentProject.year}
+                  {project.year}
                 </span>
               )}
             </div>
@@ -129,7 +123,7 @@ export default function ProjectDialog({
               id="dialog-project-title"
               className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text)] leading-snug"
             >
-              {currentProject.title}
+              {project.title}
             </h3>
           </div>
 
@@ -145,22 +139,22 @@ export default function ProjectDialog({
 
         {/* Tagline */}
         <p className="text-xs sm:text-sm text-[var(--accent)] font-medium mb-3 leading-relaxed">
-          {currentProject.tagline}
+          {project.tagline}
         </p>
 
         {/* 2 to 3 Sentence Factual Description */}
         <p className="text-xs sm:text-sm text-[var(--muted)] leading-relaxed mb-4">
-          {currentProject.description}
+          {project.description}
         </p>
 
         {/* 3 Factual Bullets */}
-        {currentProject.bullets && currentProject.bullets.length > 0 && (
+        {project.bullets && project.bullets.length > 0 && (
           <div className="mb-4">
             <h4 className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--muted-dark)] mb-2">
               Key Architecture & Workflows
             </h4>
             <ul className="space-y-2">
-              {currentProject.bullets.map((bullet, idx) => (
+              {project.bullets.map((bullet: string, idx: number) => (
                 <li
                   key={idx}
                   className="flex items-start gap-2 text-xs text-[var(--text)] leading-relaxed"
@@ -179,7 +173,7 @@ export default function ProjectDialog({
             Technologies & Tools
           </h4>
           <div className="flex flex-wrap gap-1.5">
-            {currentProject.stack.map((tech) => (
+            {project.stack.map((tech: string) => (
               <span
                 key={tech}
                 className="px-2 py-0.5 text-[10px] font-mono bg-white/5 text-[var(--muted)] rounded border border-white/5"
@@ -193,18 +187,18 @@ export default function ProjectDialog({
         {/* Actions / Links ONLY if a URL exists */}
         <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-3 mt-auto">
           <div className="text-[11px] text-[var(--muted-dark)] font-mono">
-            {!currentProject.repoUrl && !currentProject.liveUrl && (
+            {!project.repoUrl && !project.liveUrl && (
               <span>Architecture walkthrough available upon request</span>
             )}
           </div>
 
           <div className="flex items-center gap-2">
-            {currentProject.repoUrl && (
+            {project.repoUrl && (
               <a
-                href={currentProject.repoUrl}
+                href={project.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${currentProject.title} repository, opens in a new tab`}
+                aria-label={`${project.title} repository, opens in a new tab`}
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[var(--accent)] text-slate-950 text-xs font-semibold hover:bg-[var(--accent-hover)] transition-colors focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
               >
                 <span>Repository</span>
@@ -212,12 +206,12 @@ export default function ProjectDialog({
               </a>
             )}
 
-            {currentProject.liveUrl && (
+            {project.liveUrl && (
               <a
-                href={currentProject.liveUrl}
+                href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${currentProject.title} live demo, opens in a new tab`}
+                aria-label={`${project.title} live demo, opens in a new tab`}
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 text-[var(--text)] text-xs font-semibold hover:bg-white/20 transition-colors focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
               >
                 <span>Live Demo</span>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PERSONAL_INFO } from "@/data/content";
-import { Copy, Check, Send, Mail, AlertCircle, ArrowUp } from "lucide-react";
+import { Copy, Check, Send, Mail, AlertCircle, ArrowUp, FileText } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./SocialIcons";
 
 export default function Contact() {
@@ -149,13 +149,13 @@ export default function Contact() {
                 </button>
               </div>
 
-              {/* Social links */}
+              {/* Social links & Resume */}
               <div className="flex gap-2">
                 <a
                   href={PERSONAL_INFO.socials.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-2 transition-colors min-h-[38px]"
+                  className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-1.5 transition-colors min-h-[38px]"
                 >
                   <GithubIcon className="w-3.5 h-3.5 text-[var(--accent)]" />
                   <span className="font-mono text-xs">GitHub</span>
@@ -165,10 +165,21 @@ export default function Contact() {
                   href={PERSONAL_INFO.socials.linkedin}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-2 transition-colors min-h-[38px]"
+                  className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-1.5 transition-colors min-h-[38px]"
                 >
                   <LinkedinIcon className="w-3.5 h-3.5 text-[var(--accent)]" />
                   <span className="font-mono text-xs">LinkedIn</span>
+                </a>
+
+                <a
+                  href={PERSONAL_INFO.resumePath}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View or download resume PDF"
+                  className="flex-1 p-2.5 rounded-xl bg-[var(--surface)] border border-white/5 text-xs text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)]/30 flex items-center justify-center gap-1.5 transition-colors min-h-[38px]"
+                >
+                  <FileText className="w-3.5 h-3.5 text-[var(--accent)]" />
+                  <span className="font-mono text-xs">Resume</span>
                 </a>
               </div>
             </div>

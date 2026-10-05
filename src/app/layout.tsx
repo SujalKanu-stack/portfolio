@@ -13,7 +13,7 @@ const caveat = Caveat({
   variable: "--font-caveat",
   subsets: ["latin"],
   display: "swap",
-  weight: ["500", "700"],
+  weight: "700",
 });
 
 export const viewport: Viewport = {
