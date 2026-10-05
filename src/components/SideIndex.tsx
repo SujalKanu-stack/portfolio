@@ -36,7 +36,7 @@ export default function SideIndex() {
     const elem = document.getElementById(id);
     if (elem) {
       if (window.__lenis) {
-        window.__lenis.scrollTo(elem, { duration: 0.9, offset: 0 });
+        window.__lenis.scrollTo(elem, { duration: 0.8, offset: -16 });
       } else {
         elem.scrollIntoView({ behavior: "smooth" });
       }

@@ -116,46 +116,69 @@ body {
   top: 16px;
 }
 
-/* Single layout contract for desktop (>= 1024px) */
-@media (min-width: 1024px) {
-  .screen-panel {
-    height: 100svh;
-    min-height: 560px;
-    padding-top: calc(var(--nav-h) + 16px);
-    padding-bottom: 32px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-  }
+/* Section layout contracts */
+.hero-panel {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: calc(var(--nav-h) + 1.25rem);
+  padding-bottom: 1.5rem;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
 
-  .screen-panel-content {
-    flex: 1 1 0%;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 100%;
+.portfolio-section {
+  width: 100%;
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+  box-sizing: border-box;
+  position: relative;
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
+}
+
+@media (min-width: 768px) {
+  .portfolio-section {
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
   }
 }
 
-@media (max-width: 1023px) {
-  .screen-panel {
-    min-height: 100svh;
-    padding-top: calc(var(--nav-h) + 24px);
-    padding-bottom: 40px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+@media (min-width: 1024px) {
+  .portfolio-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
+}
 
-  .screen-panel-content {
-    width: 100%;
-    margin-top: auto;
-    margin-bottom: auto;
+.portfolio-container {
+  max-width: 1200px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .portfolio-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
+}
+
+/* Backward compatibility aliases */
+.screen-panel {
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  scroll-margin-top: calc(var(--nav-h) + 1rem);
+}
+
+.screen-panel-content {
+  width: 100%;
 }
 
 .font-handwriting {

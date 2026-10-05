@@ -13,13 +13,13 @@ export default function Hero() {
     <section
       id="home"
       aria-label="Home Introduction"
-      className="screen-panel w-full relative z-10"
+      className="hero-panel w-full relative z-10"
     >
       {/* Ambient background glow: slow drifting pure CSS field */}
       <div className="ambient-hero-glow" aria-hidden="true" />
 
-      <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12 flex flex-col justify-between">
-        <div className="pt-2 flex flex-col-reverse md:flex-row items-center gap-8 lg:gap-14">
+      <div className="portfolio-container flex flex-col justify-between flex-1 h-full min-h-0">
+        <div className="pt-2 sm:pt-4 my-auto flex flex-col-reverse md:flex-row items-center gap-8 lg:gap-14">
           <HeroClient
             hasResume={hasResume}
             resumePath={PERSONAL_INFO.resumePath}

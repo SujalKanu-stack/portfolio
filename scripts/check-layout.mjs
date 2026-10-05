@@ -3,9 +3,10 @@ import fs from "fs";
 import path from "path";
 
 const VIEWPORTS = [
-  { width: 1366, height: 768, name: "1366x768" },
-  { width: 1440, height: 900, name: "1440x900" },
-  { width: 1920, height: 1080, name: "1920x1080" },
+  { width: 390, height: 844, name: "390x844-mobile" },
+  { width: 768, height: 1024, name: "768x1024-tablet" },
+  { width: 1366, height: 768, name: "1366x768-desktop" },
+  { width: 1440, height: 900, name: "1440x900-desktop" },
 ];
 
 const SECTIONS = ["home", "about", "projects", "journey", "contact"];
@@ -14,7 +15,7 @@ const FORBIDDEN_PROJECTS_KEYWORDS = ["MATLAB", "Curve", "Residual", "Regression"
 
 async function runLayoutCheck() {
   console.log("================================================================================");
-  console.log("            PLAYWRIGHT SECTION LAYOUT & SNAP AUDIT CHECK (v4)                  ");
+  console.log("            PLAYWRIGHT RESPONSIVE CONTENT LAYOUT & AUDIT CHECK (v5)             ");
   console.log("================================================================================\n");
 
   const screenshotDir = path.join(process.cwd(), "audit-screenshots");
@@ -51,8 +52,8 @@ async function runLayoutCheck() {
     await page.goto(targetUrl, { waitUntil: "networkidle" });
     await page.waitForTimeout(600);
 
-    // Certifications isolation and MATLAB removal check (run once on primary viewport)
-    if (vp.name === "1366x768") {
+    // Certifications isolation and MATLAB removal check (run once on primary desktop)
+    if (vp.name.includes("1366x768")) {
       const domChecks = await page.evaluate(
         ({ certKeywords, forbiddenKeywords }) => {
           const projectsEl = document.querySelector("#projects");
@@ -100,67 +101,41 @@ async function runLayoutCheck() {
       } else {
         await page.evaluate((id) => {
           const el = document.getElementById(id);
-          if (el && window.__lenis) window.__lenis.scrollTo(el, { duration: 0.2, offset: 0 });
+          if (el && window.__lenis) window.__lenis.scrollTo(el, { duration: 0.3, offset: -16 });
           else if (el) el.scrollIntoView();
         }, sectionId);
       }
 
-      // Wait for Lenis scroll and idle snap to fully settle
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(600);
 
       // Measure section metrics
       const metrics = await page.evaluate(
-        ({ id, prevId, nextId, vh, vw }) => {
+        ({ id, vh, vw }) => {
           const sec = document.getElementById(id);
           const nav = document.querySelector("header nav");
           const navBottom = nav ? nav.getBoundingClientRect().bottom : 50;
 
           if (!sec) return null;
           const rect = sec.getBoundingClientRect();
-          const scrollHeight = sec.scrollHeight;
-          const clientHeight = sec.clientHeight;
 
-          // (a) Top within 2px of viewport top
-          const topDiff = Math.abs(rect.top);
-          const topAligned = topDiff <= 2.5;
-
-          // (b) Content fits without overflow (scrollHeight <= clientHeight + 1)
-          const contentFits = scrollHeight <= clientHeight + 1.5;
-
-          // (c) Gap between nav bottom and first visible text content line
-          const firstHeading = sec.querySelector("h1, h2, h3, span, p");
-          let gapVh = 0;
-          if (firstHeading) {
-            const hRect = firstHeading.getBoundingClientRect();
-            const gapPx = Math.max(0, hRect.top - navBottom);
-            gapVh = (gapPx / vh) * 100;
+          // 1. Heading visible below nav
+          const heading = sec.querySelector("h1, h2, [id$='heading']");
+          let headingVisible = true;
+          let headingTop = 0;
+          if (heading) {
+            const hRect = heading.getBoundingClientRect();
+            headingTop = Math.round(hRect.top);
+            headingVisible = hRect.top >= navBottom - 24 && hRect.top <= vh;
           }
-          const gapPass = gapVh <= 14.5;
 
-          // (d) Previous and next sections 0px visible
-          let prevVisible = 0;
-          let nextVisible = 0;
-          if (prevId) {
-            const pSec = document.getElementById(prevId);
-            if (pSec) {
-              const pRect = pSec.getBoundingClientRect();
-              prevVisible = Math.max(0, pRect.bottom);
-            }
-          }
-          if (nextId) {
-            const nSec = document.getElementById(nextId);
-            if (nSec) {
-              const nRect = nSec.getBoundingClientRect();
-              nextVisible = Math.max(0, vh - nRect.top);
-            }
-          }
-          const zeroAdjacentVisible = prevVisible <= 2 && nextVisible <= 2;
+          // 2. Horizontal fit (no page-level x-overflow)
+          const noXOverflow = document.documentElement.scrollWidth <= vw + 2;
 
-          // (e) Task 5: Side index active label bounding box check (right <= window.innerWidth - 8)
+          // 3. Side index right bounds (desktop only)
           const sideIndexLabel = document.querySelector(`[data-testid="side-index-label-${id}"]`);
           let sideIndexPass = true;
           let sideIndexRight = 0;
-          if (sideIndexLabel) {
+          if (sideIndexLabel && vw >= 1024) {
             const sRect = sideIndexLabel.getBoundingClientRect();
             sideIndexRight = Math.round(sRect.right);
             sideIndexPass = sRect.right <= vw - 8;
@@ -168,55 +143,37 @@ async function runLayoutCheck() {
 
           return {
             id,
-            rectTop: rect.top,
-            topDiff,
-            topAligned,
-            scrollHeight,
-            clientHeight,
-            contentFits,
-            gapVh: gapVh.toFixed(1),
-            gapPass,
-            prevVisible: Math.round(prevVisible),
-            nextVisible: Math.round(nextVisible),
-            zeroAdjacentVisible,
+            rectTop: Math.round(rect.top),
+            headingTop,
+            headingVisible,
+            noXOverflow,
             sideIndexRight,
             sideIndexPass,
           };
         },
         {
           id: sectionId,
-          prevId: i > 0 ? SECTIONS[i - 1] : null,
-          nextId: i < SECTIONS.length - 1 ? SECTIONS[i + 1] : null,
           vh: vp.height,
           vw: vp.width,
         }
       );
 
       if (metrics) {
-        const pass =
-          metrics.topAligned &&
-          metrics.contentFits &&
-          metrics.gapPass &&
-          metrics.zeroAdjacentVisible &&
-          metrics.sideIndexPass;
+        const pass = metrics.headingVisible && metrics.noXOverflow && metrics.sideIndexPass;
 
         tableResults.push({
           viewport: vp.name,
           section: `#${sectionId}`,
-          topDiff: `${metrics.topDiff.toFixed(1)}px`,
-          topStatus: metrics.topAligned ? "PASS" : "FAIL",
-          fit: `${metrics.scrollHeight}/${metrics.clientHeight}px`,
-          fitStatus: metrics.contentFits ? "PASS" : "FAIL",
-          gap: `${metrics.gapVh}vh`,
-          gapStatus: metrics.gapPass ? "PASS" : "FAIL",
-          adjacent: `p:${metrics.prevVisible}px, n:${metrics.nextVisible}px`,
-          sideIndex: `${metrics.sideIndexRight}px (<= ${vp.width - 8}px)`,
+          headingTop: `${metrics.headingTop}px`,
+          headingStatus: metrics.headingVisible ? "PASS" : "FAIL",
+          noXOverflow: metrics.noXOverflow ? "PASS" : "FAIL",
+          sideIndex: `${metrics.sideIndexRight}px`,
           sideIndexStatus: metrics.sideIndexPass ? "PASS" : "FAIL",
           overall: pass ? "PASS" : "FAIL",
         });
 
         console.log(
-          `  [${pass ? "PASS" : "FAIL"}] #${sectionId.padEnd(8)} | TopDiff: ${metrics.topDiff.toFixed(1)}px | Gap: ${metrics.gapVh}vh | Fit: ${metrics.contentFits ? "YES" : "NO"} | SideIndex: ${metrics.sideIndexPass ? "PASS" : "FAIL"}`
+          `  [${pass ? "PASS" : "FAIL"}] #${sectionId.padEnd(8)} | HeadingTop: ${metrics.headingTop}px | Overflow: ${metrics.noXOverflow ? "OK" : "OVERFLOW"} | SideIndex: ${metrics.sideIndexPass ? "PASS" : "FAIL"}`
         );
 
         // Save screenshot
@@ -247,7 +204,7 @@ async function runLayoutCheck() {
     console.error("Layout audit detected issues. Review the table above.");
     process.exit(1);
   } else {
-    console.log("All sections passed 100svh layout, flush snap, and side-index checks!");
+    console.log("All sections passed responsive content layout and side-index checks!");
   }
 }
 

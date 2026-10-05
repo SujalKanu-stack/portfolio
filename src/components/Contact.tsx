@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { PERSONAL_INFO } from "@/data/content";
-import { Copy, Check, Send, Mail, AlertCircle, ArrowUp, FileText } from "lucide-react";
+import { Copy, Check, Send, Mail, Phone, AlertCircle, ArrowUp, FileText } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./SocialIcons";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "", honeypot: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
@@ -16,6 +17,18 @@ export default function Contact() {
       await navigator.clipboard.writeText(PERSONAL_INFO.socials.email);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // Fallback
+    }
+  };
+
+  const copyPhone = async () => {
+    try {
+      if (PERSONAL_INFO.socials.phone) {
+        await navigator.clipboard.writeText(PERSONAL_INFO.socials.phone);
+        setCopiedPhone(true);
+        setTimeout(() => setCopiedPhone(false), 2500);
+      }
     } catch {
       // Fallback
     }
@@ -105,12 +118,12 @@ export default function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="screen-panel w-full"
+      className="portfolio-section"
     >
-      <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12 flex flex-col justify-between">
+      <div className="portfolio-container flex flex-col">
         <div>
-          <div className="mb-4">
-            <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold">
+          <div className="mb-6 sm:mb-8">
+            <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold block mb-1">
               05 / Contact
             </span>
             <h2
@@ -148,6 +161,29 @@ export default function Contact() {
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                 </button>
               </div>
+
+              {/* Direct phone card with copy */}
+              {PERSONAL_INFO.socials.phone && (
+                <div className="p-3 rounded-xl bg-[var(--surface)] border border-white/5 flex items-center justify-between">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Phone className="w-3.5 h-3.5 text-[var(--accent)] flex-shrink-0" />
+                    <a
+                      href={`tel:${PERSONAL_INFO.socials.phoneRaw}`}
+                      className="text-xs text-[var(--text)] hover:text-[var(--accent)] truncate transition-colors font-mono"
+                    >
+                      {PERSONAL_INFO.socials.phone}
+                    </a>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={copyPhone}
+                    aria-label="Copy phone number"
+                    className="p-1 rounded text-[var(--muted)] hover:text-[var(--text)] transition-colors"
+                  >
+                    {copiedPhone ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+              )}
 
               {/* Social links & Resume */}
               <div className="flex gap-2">
@@ -291,8 +327,8 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Integrated 1-line Footer at the bottom of the contact screen panel */}
-        <div className="pt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-[var(--muted-dark)] mt-4">
+        {/* Integrated 1-line Footer at the bottom of the contact section */}
+        <div className="pt-6 sm:pt-8 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-[var(--muted-dark)] mt-12 sm:mt-16">
           <p>&copy; {new Date().getFullYear()} Sujal Kumar Kanu &bull; BMSIT&M Bengaluru</p>
           <a
             href="#home"

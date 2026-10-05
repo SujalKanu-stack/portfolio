@@ -32,13 +32,13 @@ export default function ProjectsClient({
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="screen-panel w-full"
+      className="portfolio-section"
     >
-      <div className="screen-panel-content max-w-[1200px] w-full mx-auto px-6 md:px-12 flex flex-col justify-center my-auto">
+      <div className="portfolio-container">
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-6 sm:mb-8">
           <div>
-            <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold">
+            <span className="text-xs font-mono text-[var(--accent)] uppercase tracking-widest font-semibold block mb-1">
               {SECTIONS[2].eyebrow}
             </span>
             <h2
@@ -51,7 +51,7 @@ export default function ProjectsClient({
         </div>
 
         {/* 12-Column Grid: 7/12 Featured Card on Left, 5/12 Index on Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch min-h-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
           {/* Left Column (7/12): Featured AgriChain Card */}
           <div className="lg:col-span-7 flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-[var(--surface)] border border-white/10 shadow-lg relative group/card">
             <div>
@@ -304,8 +304,8 @@ export default function ProjectsClient({
             </div>
           </div>
 
-          {/* Right Column (5/12): Equal-Height 3-Row Index */}
-          <div className="lg:col-span-5 grid grid-rows-3 gap-3 h-full">
+          {/* Right Column (5/12): Responsive 3-Card Index */}
+          <div className="lg:col-span-5 flex flex-col gap-3.5 h-full">
             {otherProjects.map((project: ProjectItem) => {
               const hasRepo = Boolean(project.repoUrl);
               const isInProgress = project.status === "in-progress";
@@ -351,7 +351,7 @@ export default function ProjectsClient({
                     {project.description}
                   </p>
 
-                  <div className="flex items-center justify-between mt-2 pt-1 border-t border-white/5">
+                  <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-white/5">
                     <div className="flex flex-wrap gap-1">
                       {project.stack.slice(0, 3).map((tech) => (
                         <span
@@ -380,7 +380,7 @@ export default function ProjectsClient({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${project.title} repository, opens in a new tab`}
-                    className="group flex flex-col justify-between p-3.5 rounded-xl bg-[var(--surface)] border border-white/5 hover:border-[var(--accent)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
+                    className="group flex-1 flex flex-col justify-between p-3.5 sm:p-4 rounded-xl bg-[var(--surface)] border border-white/5 hover:border-[var(--accent)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]"
                   >
                     {innerContent}
                   </a>
@@ -394,7 +394,7 @@ export default function ProjectsClient({
                   onClick={(e) => openDialog(project, e)}
                   aria-haspopup="dialog"
                   aria-label={`${project.title}, opens architecture details dialog`}
-                  className="group flex flex-col justify-between p-3.5 rounded-xl bg-[var(--surface)] border border-white/5 hover:border-[var(--accent)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] w-full"
+                  className="group flex-1 flex flex-col justify-between p-3.5 sm:p-4 rounded-xl bg-[var(--surface)] border border-white/5 hover:border-[var(--accent)] hover:bg-[var(--surface-hover)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] w-full"
                 >
                   {innerContent}
                 </button>

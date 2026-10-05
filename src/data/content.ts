@@ -53,12 +53,17 @@ export const PROJECTS: ProjectItem[] = [
     description:
       "A decentralized tracking platform built on Polygon Amoy. It establishes an immutable provenance trail across farmer, distributor, retailer, and consumer while flagging supply chain anomalies in real time.",
     year: "2026",
-    stack: ["Solidity", "Polygon Amoy", "React", "Node/Express", "Ethers.js", "Docker Compose"],
+    stack: ["Solidity", "Polygon Amoy", "React", "Node.js", "Docker", "Ethers.js"],
     features: [
       "4-tier lifecycle custody tracking (Farmer -> Distributor -> Retailer -> Consumer)",
       "3-layer fraud engine: flags duplicate batch lots, sequence gaps, and >500% price anomalies",
       "Dynamic trust score (0-100) per actor and QR-based provenance verification",
-      "Integrated courier tracking for active transit legs",
+      "Integrated courier tracking for active transit legs and containerized with Docker Compose",
+    ],
+    bullets: [
+      "Architected a decentralized supply chain covering 4 role tiers (Farmer, Distributor, Retailer, Consumer) on Polygon Amoy with Solidity smart contracts and Ethers.js.",
+      "Implemented an automated 3-tier fraud engine flagging duplicates, missing transit steps, and price spikes (>500%) while computing dynamic trust scores (0–100).",
+      "Created batch-specific dynamic QR code generation for end-to-end provenance verification, integrated live logistics tracking, and containerized the service using Docker Compose.",
     ],
     repoUrl: "https://github.com/SujalKanu-stack/AgriChain",
     image: withBase("/projects/agrichain.png"),
@@ -66,18 +71,18 @@ export const PROJECTS: ProjectItem[] = [
   {
     id: "research-collab-hub",
     featured: false,
-    status: "in-progress",
+    status: "completed",
     title: "Research Collab Hub",
-    tagline: "Collaborative research paper workspace with AI abstract decomposition",
+    tagline: "AI-powered academic research platform with Claude LLM workflows",
     description:
-      "A collaborative research paper platform with automated paper versioning triggers, BibTeX citation export, and conference deadline tracking; Claude API pipelines for abstract decomposition, venue suitability analysis, and co-author matching.",
+      "A modular collaborative research platform featuring automated paper version archiving, BibTeX citation export, and an Anthropic Claude LLM pipeline for abstract summarization and co-author matching.",
     year: "2026",
     repoUrl: "https://github.com/SujalKanu-stack/Research_collab_Hub",
-    stack: ["FastAPI", "React 18", "PostgreSQL 16", "Redis", "Docker", "Claude API"],
+    stack: ["FastAPI", "PostgreSQL", "Redis", "React", "Claude API"],
     bullets: [
-      "Versioned paper drafting workspace with AI abstract decomposition via Claude API",
-      "Automated BibTeX citation formatting and conference submission deadline calendar",
-      "Full-stack asynchronous backend with PostgreSQL schema and Redis caching",
+      "Developed a modular collaborative research system with automated paper version archiving, BibTeX citation export, and milestone/deadline management.",
+      "Built an integrated LLM pipeline using Anthropic Claude for abstract summarization, venue suitability analysis, and co-author recommendations via Jaccard similarity.",
+      "Designed a relational PostgreSQL schema utilizing triggers for automated revision tracking, audit logs, and instant notifications; backed by Redis caching.",
     ],
   },
   {
@@ -87,14 +92,14 @@ export const PROJECTS: ProjectItem[] = [
     title: "CardioSim 3D",
     tagline: "Interactive 3D cardiac anatomy and arrhythmia simulation",
     description:
-      "Browser-based anatomical simulator allowing 30 to 200 BPM heart pacing, interactive coronary artery blockage models, and an integrated diagnostic quiz for medical students.",
+      "Interactive 3D human heart simulation platform featuring photorealistic rendering, 360° orbital control, dynamic 30–200 BPM cardiac pacing, and pathology simulations with a medical quiz engine.",
     year: "2026",
     repoUrl: "https://github.com/SujalKanu-stack/Heart_Sim",
-    stack: ["Vanilla JS", "WebGL", "Sketchfab API"],
+    stack: ["JavaScript (ES6+)", "Sketchfab 3D API", "HTML5", "CSS3"],
     bullets: [
-      "Browser-based 3D anatomical heart simulator supporting 30 to 200 BPM dynamic pacing",
-      "Interactive coronary artery blockage and simulated ischemia visualization",
-      "Integrated arrhythmia diagnostic quiz using Sketchfab 3D API",
+      "Engineered an interactive 3D human heart simulation platform featuring photorealistic rendering, 360° orbital control, and dynamic anatomical callouts for 24+ structures.",
+      "Built a synchronized cardiac engine dynamically adjusting from 30 BPM to 200 BPM paired with pulsing CSS animations and cardiac cycle phase transitions.",
+      "Simulated cardiac pathologies (arterial blockage, arrhythmia, valve regurgitation) and developed an interactive medical quiz assessment engine.",
     ],
   },
   {
@@ -106,7 +111,6 @@ export const PROJECTS: ProjectItem[] = [
     description:
       "Hardware sensor array transmitting atmospheric data via telemetry to a lightweight dashboard for real-time climate logging.",
     year: "2023",
-    // TODO(Sujal): add repoUrl if you make the repository public
     stack: ["IoT sensors", "Temperature", "Humidity", "Pressure"],
     bullets: [
       "Atmospheric sensor array recording ambient temperature, humidity, and barometric pressure",
@@ -122,14 +126,14 @@ export const JOURNEY: JourneyItem[] = [
     category: "Education",
     title: "B.E. in Computer Science & Engineering",
     institution: "BMS Institute of Technology & Management (VTU)",
-    location: "Bengaluru, India",
-    details: "Third-year undergraduate student. Core studies in Algorithms, Database Systems, Computer Networks, and Cryptography.",
+    location: "Bengaluru, Karnataka",
+    details: "Coursework: Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, Computer Networks, Operating Systems, Discrete Mathematics.",
   },
   {
-    year: "2024",
+    year: "Graduated 2024",
     category: "Education",
-    title: "Higher Secondary (Grade XII)",
-    institution: "National Infotech Secondary School (NEB)",
+    title: "Grade XII (NEB, Nepal)",
+    institution: "National Infotech Secondary School",
     location: "Birgunj, Nepal",
     details: "Science & Technology stream with focus on Physics, Mathematics, and Computer Science.",
   },
@@ -138,22 +142,21 @@ export const JOURNEY: JourneyItem[] = [
     category: "Hackathon",
     title: "ArtPark CodeForge, Rhapsody 4.0",
     institution: "IISc Bangalore",
-    details: "Competed alongside 2,796+ teams in robotics, autonomous agents, and systems tracks.",
+    details: "Competed among 2,796+ national teams in rapid software prototyping.",
   },
   {
     year: "2026",
     category: "Hackathon",
     title: "CODE RED 3.0",
     institution: "E-Cell BMSIT&M",
-    details: "24-hour national technical hackathon solving real-time engineering challenges under tight time limits.",
+    details: "24-Hour Hackathon. Prototyped and pitched a working software solution in 24 hours.",
   },
-  // TODO(Sujal): credential links
   {
     year: "Oct 2025",
     category: "Certification",
-    title: "Statistics Onramp and Curve Fitting Onramp",
+    title: "Statistics & Curve Fitting Onramp",
     institution: "MathWorks",
-    details: "100% completion. Regression curves, residual analysis, and mathematical curve fitting models.",
+    details: "Regression curves, residual analysis, and mathematical curve fitting models.",
   },
   {
     year: "Jun 2025",
@@ -165,8 +168,8 @@ export const JOURNEY: JourneyItem[] = [
   {
     year: "2023",
     category: "Certification",
-    title: "IoT and Robotics, 7-Day Intensive",
-    institution: "NepaTronix x National Infotech",
+    title: "IoT & Robotics Intensive",
+    institution: "NepaTronix",
     details: "Hands-on microcontroller programming, sensor integration, and motor actuation circuits.",
   },
 ];
@@ -175,16 +178,15 @@ export const PERSONAL_INFO = {
   name: "Sujal Kumar Kanu",
   role: "Computer Science & Engineering Student",
   institution: "BMS Institute of Technology & Management (VTU)",
-  location: "Bengaluru, India",
+  location: "Bengaluru, Karnataka",
   tagline: "Exploring full-stack systems, blockchain protocols, and applied generative AI.",
   bio: [
-    "I am a third-year Computer Science and Engineering student at BMS Institute of Technology & Management in Bengaluru, studying since 2023.",
+    "I am a third-year Computer Science and Engineering student at BMS Institute of Technology & Management in Bengaluru, studying since 2024.",
     "My focus centers on full-stack web engineering, smart contract development, and applied generative AI systems.",
     "Right now I'm learning generative AI: how large language models work, prompt engineering, and building AI agents. Next I want to build an agent end to end, while continuing to explore network security.",
-    // TODO(Sujal): add the framework or course you are using (e.g. LangChain, LlamaIndex, or specific AI agent course)
     "Outside coursework, I experiment with decentralized systems and participate in 24-hour hackathons.",
   ],
-  languages: ["Bhojpuri", "Hindi", "Nepali", "English"],
+  languages: ["English (Professional)", "Hindi", "Nepali", "Bhojpuri"],
   stats: [
     {
       value: PROJECTS.filter((p) => p.status === "completed").length.toString(),
@@ -201,9 +203,10 @@ export const PERSONAL_INFO = {
   ],
   socials: {
     github: "https://github.com/SujalKanu-stack",
-    // TODO(Sujal): confirm which LinkedIn URL is correct (resume says sujal-kanu vs sujal-kumar-kanu)
-    linkedin: "https://www.linkedin.com/in/sujal-kanu",
+    linkedin: "https://www.linkedin.com/in/sujal-kumar-kanu/",
     email: "sujalguptaa121@gmail.com",
+    phone: "+91 9905206764",
+    phoneRaw: "+919905206764",
   },
   resumePath: withBase("/Sujal_Kumar_Kanu_Resume_2026.pdf"),
 };

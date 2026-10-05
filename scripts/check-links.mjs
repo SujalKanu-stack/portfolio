@@ -5,7 +5,7 @@ import { URL } from "url";
 // Extract external URLs directly or test list
 const URLS_TO_CHECK = [
   { name: "GitHub Profile", url: "https://github.com/SujalKanu-stack" },
-  { name: "LinkedIn Profile", url: "https://www.linkedin.com/in/sujal-kanu" },
+  { name: "LinkedIn Profile", url: "https://www.linkedin.com/in/sujal-kumar-kanu/" },
   { name: "AgriChain Repo", url: "https://github.com/SujalKanu-stack/AgriChain" },
   { name: "Research Collab Hub Repo", url: "https://github.com/SujalKanu-stack/Research_collab_Hub" },
   { name: "CardioSim (Heart_Sim) Repo", url: "https://github.com/SujalKanu-stack/Heart_Sim" },
