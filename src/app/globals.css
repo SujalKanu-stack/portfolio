@@ -88,14 +88,27 @@ html.lenis, html.lenis-smooth {
 
 body {
   background-color: var(--bg-0);
-  background-image: radial-gradient(circle at 50% 0%, var(--bg-1) 0%, var(--bg-0) 75%);
-  background-attachment: fixed;
   color: var(--text);
   font-family: var(--font-sans);
   min-height: 100vh;
+  min-height: 100svh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
+  position: relative;
+}
+
+/* GPU-composited fixed background - eliminates repaint lag during scroll */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-0);
+  background-image: radial-gradient(circle at 50% 0%, var(--bg-1) 0%, var(--bg-0) 75%);
+  pointer-events: none;
+  z-index: -1;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Accessible skip link */
@@ -116,13 +129,29 @@ body {
   top: 16px;
 }
 
+/* Fluid responsive typography utilities */
+.fluid-h1 {
+  font-size: clamp(1.85rem, 5.5vw + 0.25rem, 3.25rem);
+  line-height: 1.15;
+}
+
+.fluid-h2 {
+  font-size: clamp(1.5rem, 3.2vw + 0.4rem, 2.25rem);
+  line-height: 1.25;
+}
+
+.fluid-body {
+  font-size: clamp(0.8125rem, 1.1vw + 0.45rem, 0.95rem);
+  line-height: 1.65;
+}
+
 /* Section layout contracts */
 .hero-panel {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: calc(var(--nav-h) + 1.5rem);
+  padding-top: calc(var(--nav-h) + 1.25rem);
   padding-bottom: clamp(1.25rem, 3vh, 2rem);
   box-sizing: border-box;
   position: relative;
@@ -137,8 +166,8 @@ body {
 
 .portfolio-section {
   width: 100%;
-  padding-top: clamp(4.5rem, 12vw, 6rem);
-  padding-bottom: clamp(3.5rem, 10vw, 5rem);
+  padding-top: clamp(4.5rem, 8vw + 2rem, 6rem);
+  padding-bottom: clamp(3.5rem, 6vw + 1.5rem, 5rem);
   box-sizing: border-box;
   position: relative;
   scroll-margin-top: 0;
@@ -179,8 +208,8 @@ body {
 
 @media (min-width: 1024px) {
   .portfolio-container {
-    padding-left: 3rem;
-    padding-right: 5.5rem; /* Extra right clearance for SideIndex navigation to prevent overlap */
+    padding-left: clamp(2.5rem, 4vw, 3rem);
+    padding-right: clamp(4.75rem, 6.5vw, 6rem); /* Extra right clearance for SideIndex navigation to prevent overlap */
   }
 }
 
@@ -245,18 +274,18 @@ body {
   opacity: 1;
 }
 
-/* Ambient hero glow: pure CSS drifting field */
+/* Ambient hero glow: pure CSS drifting field with strict isolation and 3D transform */
 @keyframes ambientDrift {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
     opacity: 0.12;
   }
   50% {
-    transform: translate(40px, -25px) scale(1.1);
+    transform: translate3d(40px, -25px, 0) scale(1.1);
     opacity: 0.18;
   }
   100% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
     opacity: 0.12;
   }
 }
@@ -273,7 +302,11 @@ body {
   pointer-events: none;
   z-index: 0;
   animation: ambientDrift 28s ease-in-out infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  contain: strict;
 }
+
 
 /* Focus outline */
 a:focus-visible,

@@ -101,7 +101,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-theme="ember"
-      className={`${inter.variable} ${caveat.variable} h-full antialiased`}
+      className={`${inter.variable} ${caveat.variable} antialiased`}
     >
       <head>
         <script
@@ -112,7 +112,7 @@ export default function RootLayout({
           <style>{`#boot-overlay { display: none !important; }`}</style>
         </noscript>
       </head>
-      <body className="min-h-full flex flex-col selection:bg-[var(--accent)] selection:text-black">
+      <body className="min-h-screen flex flex-col selection:bg-[var(--accent)] selection:text-black">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>

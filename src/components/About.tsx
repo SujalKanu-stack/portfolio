@@ -17,7 +17,7 @@ export default function About() {
           </span>
           <h2
             id="about-heading"
-            className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)]"
+            className="fluid-h2 font-extrabold tracking-tight text-[var(--text)]"
           >
             About me
           </h2>
@@ -26,8 +26,8 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-12 items-start">
           {/* Left Column (7/12): Narrative */}
           <div className="lg:col-span-7 flex flex-col justify-start">
-            {/* Concise Handwritten Voice */}
-            <div className="space-y-3.5 sm:space-y-4 font-handwriting text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed">
+            {/* Concise Handwritten Voice with Responsive Fluid Clamp */}
+            <div className="space-y-3.5 sm:space-y-4 font-handwriting text-[clamp(1.05rem,1.3vw+0.65rem,1.25rem)] text-slate-300 leading-relaxed">
               <p>
                 I study Computer Science and Engineering at BMSIT&M in Bengaluru, where I&apos;ve been building software since 2024.
               </p>

@@ -108,9 +108,12 @@ export default function Contact() {
   const handleBackToTop = (e: React.MouseEvent) => {
     e.preventDefault();
     if (window.__lenis) {
-      window.__lenis.scrollTo(0, { duration: 1.2 });
+      window.__lenis.scrollTo(0, { duration: 0.85 });
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    if (window.history.pushState) {
+      window.history.pushState(null, "", "#home");
     }
   };
 
@@ -128,7 +131,7 @@ export default function Contact() {
             </span>
             <h2
               id="contact-heading"
-              className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)]"
+              className="fluid-h2 font-extrabold tracking-tight text-[var(--text)]"
             >
               Get in touch
             </h2>

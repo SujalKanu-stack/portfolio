@@ -19,30 +19,34 @@ export default function SmoothScroll({
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Respect reduced motion
+    // Respect reduced motion preference
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
+    // Optimized Lenis configuration for 60/120 FPS buttery smooth scrolling
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      syncTouch: false,
-      touchMultiplier: 1.5,
+      syncTouch: false, // Maintain native, responsive hardware-accelerated touch physics on mobile
+      touchMultiplier: 1.0,
+      infinite: false,
     });
 
     lenisRef.current = lenis;
     window.__lenis = lenis;
 
+    // Proper recursive RAF tracking to eliminate memory leaks and multiple loops
+    let rafId: number;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
-    const animId = requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
-    // Intercept internal hash links to scroll smoothly with Lenis
+    // Global smooth navigation for anchor clicks
     const handleAnchorClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest("a");
       if (!target) return;
@@ -52,17 +56,35 @@ export default function SmoothScroll({
         if (element) {
           e.preventDefault();
           lenis.scrollTo(element as HTMLElement, {
-            duration: 0.8,
+            duration: 0.85,
             offset: 0,
+            lock: false,
           });
+          // Update URL hash cleanly without abrupt native scroll jumping
+          if (window.history.pushState) {
+            window.history.pushState(null, "", href);
+          }
         }
+      } else if (href === "#") {
+        e.preventDefault();
+        lenis.scrollTo(0, { duration: 0.85 });
       }
     };
 
     document.addEventListener("click", handleAnchorClick);
 
+    // Handle initial hash in URL if present
+    if (window.location.hash) {
+      const initialElement = document.querySelector(window.location.hash);
+      if (initialElement) {
+        setTimeout(() => {
+          lenis.scrollTo(initialElement as HTMLElement, { duration: 0.6, offset: 0 });
+        }, 100);
+      }
+    }
+
     return () => {
-      cancelAnimationFrame(animId);
+      cancelAnimationFrame(rafId);
       document.removeEventListener("click", handleAnchorClick);
       lenis.destroy();
       window.__lenis = undefined;
@@ -81,3 +103,4 @@ export default function SmoothScroll({
 
   return <>{children}</>;
 }
+

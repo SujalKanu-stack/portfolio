@@ -43,7 +43,7 @@ export default function ProjectsClient({
             </span>
             <h2
               id="projects-heading"
-              className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)]"
+              className="fluid-h2 font-extrabold tracking-tight text-[var(--text)]"
             >
               Featured Systems
             </h2>

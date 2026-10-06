@@ -52,12 +52,12 @@ export default function TechLogos() {
             tabIndex={0}
             aria-label={item.name}
             onMouseMove={handleMouseMove}
-            className="spotlight-card group relative flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-xl border border-white/10 bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)] transition-all duration-200 cursor-default focus-visible:ring-1 focus-visible:ring-[var(--accent)] min-h-[60px]"
+            className="spotlight-card group relative flex flex-col items-center justify-center p-1.5 min-[360px]:p-2 sm:p-2.5 rounded-xl border border-white/10 bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--text)] hover:border-[var(--accent)] transition-all duration-200 cursor-default focus-visible:ring-1 focus-visible:ring-[var(--accent)] min-h-[56px] sm:min-h-[60px]"
           >
             <div className="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center transition-transform duration-200 group-hover:scale-110">
               <IconComponent size={18} className="fill-current group-hover:opacity-100 opacity-80" />
             </div>
-            <span className="text-[9px] sm:text-[10px] font-mono tracking-tight text-[var(--muted)] group-hover:text-[var(--text)] mt-1 opacity-90 truncate max-w-full text-center">
+            <span className="text-[8.5px] min-[360px]:text-[9px] sm:text-[10px] font-mono tracking-tight text-[var(--muted)] group-hover:text-[var(--text)] mt-1 opacity-90 truncate max-w-full text-center">
               {item.name}
             </span>
           </div>

@@ -30,9 +30,12 @@ export default function LiveStatusStrip() {
     const aboutElem = document.getElementById("about");
     if (aboutElem) {
       if (window.__lenis) {
-        window.__lenis.scrollTo(aboutElem, { duration: 0.8, offset: 0 });
+        window.__lenis.scrollTo(aboutElem, { duration: 0.85, offset: 0 });
       } else {
         aboutElem.scrollIntoView({ behavior: "smooth" });
+      }
+      if (window.history.pushState) {
+        window.history.pushState(null, "", "#about");
       }
     }
   };

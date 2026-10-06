@@ -61,7 +61,7 @@ export default function Journey() {
           </span>
           <h2
             id="journey-heading"
-            className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)]"
+            className="fluid-h2 font-extrabold tracking-tight text-[var(--text)]"
           >
             Academic & Competitive Journey
           </h2>

@@ -48,6 +48,12 @@ export default function BootSequence({ onComplete }: { onComplete: () => void })
 
     setProgress(100);
 
+    try {
+      sessionStorage.setItem("portfolio_booted", "true");
+    } catch {
+      // Storage unavailable
+    }
+
     // Smooth transition into Hero section
     setTimeout(() => {
       setShouldRender(false);
@@ -224,7 +230,8 @@ export default function BootSequence({ onComplete }: { onComplete: () => void })
             aria-label="Skip boot sequence"
             className="text-[var(--accent)] font-semibold tracking-wider hover:brightness-125 focus:outline-none transition-all cursor-pointer flex-shrink-0 text-[10px] sm:text-[11px]"
           >
-            [ESC OR CLICK TO SKIP]
+            <span className="sm:hidden">[TAP TO SKIP]</span>
+            <span className="hidden sm:inline">[ESC OR CLICK TO SKIP]</span>
           </button>
         </div>
 

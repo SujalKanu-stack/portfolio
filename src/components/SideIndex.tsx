@@ -1,54 +1,53 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { SECTIONS } from "@/data/content";
+import { useScrollSpy } from "@/lib/useScrollSpy";
 
 export default function SideIndex() {
-  const [activeId, setActiveId] = useState("home");
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const { activeSection, scrollToSection } = useScrollSpy();
+  const progressBarRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Calculate top scroll progress percentage
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
-      setScrollProgress(progress);
+    let ticking = false;
 
-      // Track active section
-      const sections = SECTIONS.map((s) => document.getElementById(s.id));
-      const scrollPos = window.scrollY + window.innerHeight * 0.4;
+    const updateProgressBar = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollHeight > 0 ? Math.min(1, Math.max(0, window.scrollY / scrollHeight)) : 0;
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const sec = sections[i];
-        if (sec && sec.offsetTop <= scrollPos) {
-          setActiveId(SECTIONS[i].id);
-          break;
-        }
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${progress})`;
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollTo = (id: string) => {
-    const elem = document.getElementById(id);
-    if (elem) {
-      if (window.__lenis) {
-        window.__lenis.scrollTo(elem, { duration: 0.8, offset: 0 });
-      } else {
-        elem.scrollIntoView({ behavior: "smooth" });
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateProgressBar();
+          ticking = false;
+        });
+        ticking = true;
       }
-    }
-  };
+    };
+
+    updateProgressBar();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
 
   return (
     <>
-      {/* 2px hairline progress bar at top */}
+      {/* 2px hairline progress bar at top - direct GPU transform, zero jitter, zero layout recalculations */}
       <div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-[var(--accent)] z-[100] transition-all duration-75 origin-left pointer-events-none"
-        style={{ transform: `scaleX(${scrollProgress / 100})` }}
+        ref={progressBarRef}
+        aria-hidden="true"
+        className="fixed top-0 left-0 right-0 h-[2px] bg-[var(--accent)] z-[100] origin-left pointer-events-none will-change-transform shadow-[0_0_8px_var(--accent)]"
+        style={{ transform: "scaleX(0)" }}
       />
 
       {/* Right side indicator: desktop only (>= 1024px), anchored with safe area padding */}
@@ -57,14 +56,14 @@ export default function SideIndex() {
         className="fixed right-[max(16px,env(safe-area-inset-right))] top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-end gap-3 pointer-events-auto select-none"
       >
         {SECTIONS.map((section) => {
-          const isActive = activeId === section.id;
+          const isActive = activeSection === section.id;
           return (
             <button
               key={section.id}
-              onClick={() => scrollTo(section.id)}
+              onClick={() => scrollToSection(section.id)}
               aria-current={isActive ? "true" : undefined}
               aria-label={`Jump to section ${section.label}`}
-              className="group flex items-center justify-end py-1 text-right focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] rounded"
+              className="group flex items-center justify-end py-1 text-right focus:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)] rounded cursor-pointer"
             >
               {/* Label positioned strictly to the LEFT of the dot, expanding leftwards */}
               <span
@@ -93,3 +92,4 @@ export default function SideIndex() {
     </>
   );
 }
+
