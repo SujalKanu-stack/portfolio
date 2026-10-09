@@ -14,8 +14,8 @@ export default function Journey() {
       <div className="space-y-3.5 sm:space-y-4">
         {items.map((item, idx) => (
           <div key={idx} className="flex gap-2.5 sm:gap-3 items-baseline">
-            <span className="text-[10px] font-mono text-[var(--muted-dark)] font-semibold flex-shrink-0 w-14 sm:w-16">
-              {item.year.includes(" - ") ? "2023 - Pres" : item.year}
+            <span className="text-[10px] font-mono text-[var(--muted-dark)] font-semibold flex-shrink-0 w-16 leading-tight">
+              {item.year}
             </span>
             <div className="min-w-0 flex-1">
               {item.credentialUrl ? (
@@ -70,7 +70,7 @@ export default function Journey() {
         {/* 3 Equal Columns on Desktop */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5 items-stretch">
           {renderColumn("Education", educationItems)}
-          {renderColumn("National Hackathons", hackathonItems)}
+          {renderColumn("Hackathons", hackathonItems)}
           {renderColumn("Certifications", certificationItems)}
         </div>
       </div>

@@ -122,7 +122,7 @@ export const PROJECTS: ProjectItem[] = [
 
 export const JOURNEY: JourneyItem[] = [
   {
-    year: "2023 - Present",
+    year: "2024–2028",
     category: "Education",
     title: "B.E. in Computer Science & Engineering",
     institution: "BMS Institute of Technology & Management (VTU)",
@@ -130,7 +130,7 @@ export const JOURNEY: JourneyItem[] = [
     details: "Coursework: Data Structures & Algorithms, Object-Oriented Programming, Database Management Systems, Computer Networks, Operating Systems, Discrete Mathematics.",
   },
   {
-    year: "Graduated 2024",
+    year: "Completed 2024",
     category: "Education",
     title: "Grade XII (NEB, Nepal)",
     institution: "National Infotech Secondary School",
@@ -194,7 +194,7 @@ export const PERSONAL_INFO = {
     },
     {
       value: JOURNEY.filter((j) => j.category === "Hackathon").length.toString(),
-      label: "National Hackathons",
+      label: "Hackathons",
     },
     {
       value: JOURNEY.filter((j) => j.category === "Certification").length.toString(),
