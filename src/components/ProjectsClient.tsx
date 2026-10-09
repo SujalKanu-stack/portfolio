@@ -81,7 +81,10 @@ export default function ProjectsClient({
                     src={withBase("/projects/agrichain.png")}
                     alt={`${featuredProject.title} preview`}
                     fill
+                    loading="lazy"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 840px"
                     className="object-cover"
+                    style={{ transform: "translateZ(0)", willChange: "transform" }}
                   />
                 ) : (
                   <svg
